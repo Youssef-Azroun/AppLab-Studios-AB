@@ -46,6 +46,12 @@
   width: auto;
   object-fit: contain;
   z-index: 95;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
 }
 
 /* 6-7 inches (around 600px) */
@@ -192,9 +198,9 @@
 }
 
 .menu-icon {
-  position: absolute;
+  position: fixed;
   top: 1rem;
-  right: 1rem;
+  right: 2rem;
   cursor: pointer;
   z-index: 1001;
 }

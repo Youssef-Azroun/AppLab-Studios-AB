@@ -37,7 +37,12 @@ function App() {
   return (
     <div className={`app-wrapper ${isMenuOpen ? 'menu-open' : ''}`}>
       <div className={`overlay ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}></div>
-      <img src={logo} alt="Logo" className="logo" />
+      <img 
+        src={logo} 
+        alt="Logo" 
+        className="logo" 
+        onClick={() => handleNavigation('/')} 
+      />
       <div className={`menu-icon ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
         <div className="menu-line"></div>
         <div className="menu-line"></div>

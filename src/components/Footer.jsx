@@ -56,7 +56,7 @@ function Footer() {
 
         <div className="footer-bottom">
           <div className="copyright">
-            <p>&copy; {currentYear} AppLab Studios AB. All rights reserved.</p>
+            <p>&copy; {currentYear} AppLab Studios. All rights reserved.</p>
           </div>
           <div className="legal-links">
             <a href="/terms">Terms of Service</a>
