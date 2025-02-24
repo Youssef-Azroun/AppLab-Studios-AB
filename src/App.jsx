@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import './App.css'
 import logo from './assets/images/logo.png'
 import { AiOutlineHome } from 'react-icons/ai'
@@ -13,6 +13,7 @@ import {
 import { BsPeople } from 'react-icons/bs'
 import { FaRegMoneyBillAlt, FaCode, FaMobileAlt, FaDatabase } from 'react-icons/fa'
 import AboutUs from './Pages/AboutUs'
+import Services from './Pages/Services'
 import Footer from './components/Footer'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [scrollPosition, setScrollPosition] = useState(0)
   const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,6 +69,10 @@ function App() {
       window.scrollTo(0, scrollPosition);
     }
   }, [isMenuOpen, scrollPosition]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
 
   const toggleMenu = () => {
     if (!isMenuOpen) {
@@ -271,6 +277,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/services" element={<Services />} />
         </Routes>
       </div>
       <Footer />
