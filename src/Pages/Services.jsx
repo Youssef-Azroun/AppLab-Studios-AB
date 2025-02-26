@@ -36,12 +36,10 @@ function Services() {
   }, [])
 
   const handleServiceClick = (service) => {
-    // Create a simplified version of the service object without JSX
     const serviceData = {
       title: service.title,
       description: service.description,
       features: service.features,
-      // For icon groups, we'll pass the type names
       iconType: Array.isArray(service.icon.props.children) 
         ? service.icon.props.children.map(icon => icon.type.name)
         : service.icon.type.name
@@ -57,9 +55,9 @@ function Services() {
   const services = [
     {
       icon: <FaGlobe className="service-icon" />,
-      title: "Web Development",
-      description: "Custom web applications built with modern technologies and best practices.",
-      features: ["Responsive Design", "Frontend Development", "Backend Integration", "Performance Optimization"]
+      title: "Webbutveckling",
+      description: "Skräddarsydda webbapplikationer byggda med moderna teknologier och bästa praxis.",
+      features: ["Responsiv Design", "Frontend-utveckling", "Backend-integration", "Prestandaoptimering"]
     },
     {
       icon: (
@@ -68,9 +66,9 @@ function Services() {
           <FaAndroid className="service-icon" />
         </div>
       ),
-      title: "Native App Development",
-      description: "Native mobile applications for iOS and Android platforms.",
-      features: ["iOS Development (Swift/SwiftUI)", "Android Development (Kotlin)", "Native Performance", "Platform-Specific Features"]
+      title: "Nativ Apputveckling",
+      description: "Nativa mobilapplikationer för iOS- och Android-plattformar.",
+      features: ["iOS-utveckling (Swift/SwiftUI)", "Android-utveckling (Kotlin)", "Nativ Prestanda", "Plattformsspecifika Funktioner"]
     },
     {
       icon: (
@@ -79,18 +77,18 @@ function Services() {
           <SiFlutter className="service-icon" />
         </div>
       ),
-      title: "Cross-Platform Development",
-      description: "Efficient multi-platform solutions using React Native and Flutter.",
-      features: ["React Native Development", "Flutter Development", "Code Reusability", "Consistent UI/UX"]
+      title: "Korsplattformsutveckling",
+      description: "Effektiva multiplattformslösningar med React Native och Flutter.",
+      features: ["React Native-utveckling", "Flutter-utveckling", "Återanvändbar Kod", "Konsekvent UI/UX"]
     }
   ]
 
   return (
     <div className="services">
       <section className="hero animate-on-scroll">
-        <h1>Our Services</h1>
+        <h1>Våra Tjänster</h1>
         <p className="tagline">
-          Professional development solutions for web and mobile platforms
+          Professionella utvecklingslösningar för webb och mobila plattformar
         </p>
       </section>
 
