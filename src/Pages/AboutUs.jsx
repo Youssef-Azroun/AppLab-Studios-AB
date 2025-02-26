@@ -8,7 +8,8 @@ import {
   FaRocket, 
   FaUsers,
   FaCogs,
-  FaChartLine
+  FaChartLine,
+  FaGlobe
 } from 'react-icons/fa'
 
 function AboutUs() {
@@ -62,7 +63,7 @@ function AboutUs() {
 
       <section className="services-grid">
         <div className="service-card animate-on-scroll">
-          <FaCode className="service-icon" />
+          <FaGlobe className="service-icon" />
           <h3>Web Development</h3>
           <p>Crafting responsive, scalable websites that deliver exceptional user experiences and drive business growth.</p>
         </div>

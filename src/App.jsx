@@ -11,16 +11,23 @@ import {
   MdOutlineSupport
 } from 'react-icons/md'
 import { BsPeople } from 'react-icons/bs'
-import { FaRegMoneyBillAlt, FaCode, FaMobileAlt, FaDatabase } from 'react-icons/fa'
+import { 
+  FaAndroid,
+  FaApple,
+  FaMobileAlt,
+  FaGlobe 
+} from 'react-icons/fa'
 import AboutUs from './Pages/AboutUs'
 import Services from './Pages/Services'
 import Footer from './components/Footer'
+import ServicesInfo from './Pages/ServicesInfo'
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
   const [scrollPosition, setScrollPosition] = useState(0)
+  const [currentLanguage, setCurrentLanguage] = useState('sv')
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -85,6 +92,11 @@ function App() {
     setIsMenuOpen(false)
   }
 
+  const handleLanguageChange = (lang) => {
+    setCurrentLanguage(lang);
+    toggleMenu();
+  };
+
   const HomePage = () => (
     <div className="home-content">
       <section className="section hero-section">
@@ -101,9 +113,10 @@ function App() {
           </div>
         </div>
         <div className="tech-stack">
-          <FaCode className="tech-icon" />
+          <FaAndroid className="tech-icon" />
+          <FaApple className="tech-icon" />
           <FaMobileAlt className="tech-icon" />
-          <FaDatabase className="tech-icon" />
+          <FaGlobe className="tech-icon" />
         </div>
       </section>
 
@@ -112,15 +125,32 @@ function App() {
         <div className="expertise-container">
           <div className="expertise-card">
             <div className="expertise-icon-wrapper">
-              <MdDevices className="expertise-icon" />
+              <FaGlobe className="expertise-icon" />
             </div>
             <div className="expertise-content">
-              <h3>Cross-Platform Development</h3>
-              <p>Native apps for iOS, Android, and Web platforms</p>
+              <h3>Web Development</h3>
+              <p>Modern web applications built with cutting-edge technologies</p>
               <ul className="expertise-features">
+                <li>React & Next.js</li>
+                <li>Progressive Web Apps</li>
+                <li>Responsive Design</li>
+              </ul>
+            </div>
+          </div>
+          <div className="expertise-card">
+            <div className="expertise-icon-wrapper">
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <FaAndroid className="expertise-icon" style={{ fontSize: '1.8rem' }} />
+                <FaApple className="expertise-icon" style={{ fontSize: '1.8rem' }} />
+              </div>
+            </div>
+            <div className="expertise-content">
+              <h3>Mobile Development</h3>
+              <p>Native and cross-platform mobile solutions</p>
+              <ul className="expertise-features">
+                <li>iOS & Android Native</li>
                 <li>React Native</li>
-                <li>iOS Development</li>
-                <li>Android Development</li>
+                <li>Flutter Development</li>
               </ul>
             </div>
           </div>
@@ -264,12 +294,32 @@ function App() {
             <span>Services</span>
           </li>
           <li onClick={() => handleNavigation('/prices')}>
-            <FaRegMoneyBillAlt className="menu-icon-item" />
+            <FaMobileAlt className="menu-icon-item" />
             <span>Prices</span>
           </li>
           <li onClick={() => handleNavigation('/about')}>
             <BsPeople className="menu-icon-item" />
             <span>About us</span>
+          </li>
+          <li className="language-selector">
+            <div className="language-container">
+              <div className="language-label">Language:</div>
+              <div className="language-options">
+                <span 
+                  className={`language-option ${currentLanguage === 'sv' ? 'active' : ''}`}
+                  onClick={() => handleLanguageChange('sv')}
+                >
+                  Svenska
+                </span>
+                <span className="separator">|</span>
+                <span 
+                  className={`language-option ${currentLanguage === 'en' ? 'active' : ''}`}
+                  onClick={() => handleLanguageChange('en')}
+                >
+                  English
+                </span>
+              </div>
+            </div>
           </li>
         </ul>
       </nav>
@@ -278,6 +328,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/services-info" element={<ServicesInfo />} />
         </Routes>
       </div>
       <Footer />
