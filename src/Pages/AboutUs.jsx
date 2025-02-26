@@ -38,25 +38,25 @@ function AboutUs() {
   return (
     <div className="about-us">
       <section className="hero animate-on-scroll">
-        <h1>Innovate. Create. Deliver.</h1>
+        <h1>Innovera. Skapa. Leverera.</h1>
         <p className="tagline">
-          Transforming visionary ideas into exceptional digital experiences
+          Förvandlar visionära idéer till exceptionella digitala upplevelser
         </p>
       </section>
 
       <section className="mission animate-on-scroll">
         <div className="mission-content">
-          <h2>Our Mission & Vision</h2>
+          <h2>Vårt Uppdrag & Vision</h2>
           <p>
-            At AppLab, we're more than just developers – we're digital innovators passionate 
-            about crafting transformative solutions that drive business success. Our mission 
-            is to bridge the gap between imagination and technology, delivering cutting-edge 
-            solutions that empower businesses to thrive in the digital age.
+            På AppLab är vi mer än bara utvecklare – vi är digitala innovatörer som brinner 
+            för att skapa transformativa lösningar som driver företagens framgång. Vårt uppdrag 
+            är att överbrygga klyftan mellan fantasi och teknik, och leverera toppmoderna 
+            lösningar som ger företag möjlighet att blomstra i den digitala tidsåldern.
           </p>
           <p>
-            We believe in pushing boundaries, embracing challenges, and turning complex 
-            problems into elegant solutions. Our team combines technical expertise with 
-            creative thinking to deliver results that exceed expectations.
+            Vi tror på att tänja gränser, anta utmaningar och förvandla komplexa 
+            problem till eleganta lösningar. Vårt team kombinerar teknisk expertis med 
+            kreativt tänkande för att leverera resultat som överträffar förväntningarna.
           </p>
         </div>
       </section>
@@ -64,59 +64,59 @@ function AboutUs() {
       <section className="services-grid">
         <div className="service-card animate-on-scroll">
           <FaGlobe className="service-icon" />
-          <h3>Web Development</h3>
-          <p>Crafting responsive, scalable websites that deliver exceptional user experiences and drive business growth.</p>
+          <h3>Webbutveckling</h3>
+          <p>Skapar responsiva, skalbara webbplatser som levererar exceptionella användarupplevelser och driver affärstillväxt.</p>
         </div>
         <div className="service-card animate-on-scroll">
           <FaMobileAlt className="service-icon" />
-          <h3>Mobile Solutions</h3>
-          <p>Building innovative mobile applications that engage users and extend your digital reach.</p>
+          <h3>Mobila Lösningar</h3>
+          <p>Bygger innovativa mobilapplikationer som engagerar användare och utökar din digitala räckvidd.</p>
         </div>
         <div className="service-card animate-on-scroll">
           <FaCloud className="service-icon" />
-          <h3>Cloud Architecture</h3>
-          <p>Designing robust cloud infrastructure that ensures scalability, security, and optimal performance.</p>
+          <h3>Molnarkitektur</h3>
+          <p>Designar robust molninfrastruktur som säkerställer skalbarhet, säkerhet och optimal prestanda.</p>
         </div>
         <div className="service-card animate-on-scroll">
           <FaCogs className="service-icon" />
-          <h3>Custom Solutions</h3>
-          <p>Developing tailored software solutions that address your unique business challenges.</p>
+          <h3>Anpassade Lösningar</h3>
+          <p>Utvecklar skräddarsydda mjukvarulösningar som hanterar dina unika affärsutmaningar.</p>
         </div>
         <div className="service-card animate-on-scroll">
           <FaRocket className="service-icon" />
-          <h3>Digital Strategy</h3>
-          <p>Creating comprehensive digital strategies that align with your business objectives.</p>
+          <h3>Digital Strategi</h3>
+          <p>Skapar omfattande digitala strategier som ligger i linje med dina affärsmål.</p>
         </div>
         <div className="service-card animate-on-scroll">
           <FaChartLine className="service-icon" />
-          <h3>Analytics & Insights</h3>
-          <p>Leveraging data analytics to drive informed decision-making and business growth.</p>
+          <h3>Analys & Insikter</h3>
+          <p>Utnyttjar dataanalys för att driva informerat beslutsfattande och affärstillväxt.</p>
         </div>
       </section>
 
       <section className="stats animate-on-scroll">
         <div className="stat-item">
           <span className="stat-number">5+</span>
-          <span className="stat-label">Active Projects</span>
+          <span className="stat-label">Aktiva Projekt</span>
         </div>
         <div className="stat-item">
           <span className="stat-number">100%</span>
-          <span className="stat-label">Project Success Rate</span>
+          <span className="stat-label">Projektframgång</span>
         </div>
         <div className="stat-item">
           <span className="stat-number">24/7</span>
-          <span className="stat-label">Development Support</span>
+          <span className="stat-label">Utvecklingssupport</span>
         </div>
         <div className="stat-item">
           <span className="stat-number">3+</span>
-          <span className="stat-label">Years Combined Experience</span>
+          <span className="stat-label">Års Samlad Erfarenhet</span>
         </div>
       </section>
 
       <section className="contact-cta animate-on-scroll">
-        <h2>Ready to Transform Your Digital Presence?</h2>
-        <p>Let's collaborate to bring your vision to life</p>
-        <button className="cta-button">Start Your Journey</button>
+        <h2>Redo att Transformera Din Digitala Närvaro?</h2>
+        <p>Låt oss samarbeta för att förverkliga din vision</p>
+        <button className="cta-button">Påbörja Din Resa</button>
       </section>
     </div>
   )

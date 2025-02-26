@@ -101,14 +101,14 @@ function App() {
     <div className="home-content">
       <section className="section hero-section">
         <div className="hero-content">
-          <h1 className="glowing-text">Innovate & Create</h1>
-          <p className="hero-subtitle">Building Tomorrow's Digital Solutions Today</p>
+          <h1 className="glowing-text">Innovera & Skapa</h1>
+          <p className="hero-subtitle">Bygger Morgondagens Digitala Lösningar Idag</p>
           <div className="hero-buttons">
             <button className="glow-button">
-              Start Project
+              Starta Projekt
             </button>
             <button className="outline-button">
-              View Portfolio
+              Visa Portfolio
             </button>
           </div>
         </div>
@@ -121,19 +121,19 @@ function App() {
       </section>
 
       <section className="section expertise-section">
-        <h2>Our Expertise</h2>
+        <h2>Vår Expertis</h2>
         <div className="expertise-container">
           <div className="expertise-card">
             <div className="expertise-icon-wrapper">
               <FaGlobe className="expertise-icon" />
             </div>
             <div className="expertise-content">
-              <h3>Web Development</h3>
-              <p>Modern web applications built with cutting-edge technologies</p>
+              <h3>Webbutveckling</h3>
+              <p>Moderna webbapplikationer byggda med toppmodern teknik</p>
               <ul className="expertise-features">
                 <li>React & Next.js</li>
-                <li>Progressive Web Apps</li>
-                <li>Responsive Design</li>
+                <li>Progressiva Webbappar</li>
+                <li>Responsiv Design</li>
               </ul>
             </div>
           </div>
@@ -145,12 +145,12 @@ function App() {
               </div>
             </div>
             <div className="expertise-content">
-              <h3>Mobile Development</h3>
-              <p>Native and cross-platform mobile solutions</p>
+              <h3>Apputveckling</h3>
+              <p>Nativa och plattformsövergripande mobila lösningar</p>
               <ul className="expertise-features">
-                <li>iOS & Android Native</li>
+                <li>iOS & Android Nativ</li>
                 <li>React Native</li>
-                <li>Flutter Development</li>
+                <li>Flutter Utveckling</li>
               </ul>
             </div>
           </div>
@@ -159,12 +159,12 @@ function App() {
               <MdSpeed className="expertise-icon" />
             </div>
             <div className="expertise-content">
-              <h3>Performance Optimization</h3>
-              <p>Lightning-fast solutions for modern applications</p>
+              <h3>Prestanda optimering</h3>
+              <p>Blixtsnabba lösningar för moderna applikationer</p>
               <ul className="expertise-features">
-                <li>Load Time Optimization</li>
-                <li>Code Splitting</li>
-                <li>Caching Strategies</li>
+                <li>Laddningstidsoptimering</li>
+                <li>Koddelning</li>
+                <li>Cachningsstrategier</li>
               </ul>
             </div>
           </div>
@@ -173,12 +173,12 @@ function App() {
               <MdSecurity className="expertise-icon" />
             </div>
             <div className="expertise-content">
-              <h3>Secure Architecture</h3>
-              <p>Enterprise-grade security implementations</p>
+              <h3>Säker Arkitektur</h3>
+              <p>Säkerhetsimplementeringar av företagsklass</p>
               <ul className="expertise-features">
-                <li>Data Encryption</li>
-                <li>Secure Authentication</li>
-                <li>Regular Security Audits</li>
+                <li>Datakryptering</li>
+                <li>Säker Autentisering</li>
+                <li>Regelbundna Säkerhetsgranskningar</li>
               </ul>
             </div>
           </div>
@@ -187,12 +187,12 @@ function App() {
               <MdOutlineSupport className="expertise-icon" />
             </div>
             <div className="expertise-content">
-              <h3>24/7 Support</h3>
-              <p>Round-the-clock technical assistance</p>
+              <h3>Dygnet Runt Support</h3>
+              <p>Teknisk assistans dygnet runt</p>
               <ul className="expertise-features">
-                <li>Live Chat Support</li>
-                <li>Priority Response</li>
-                <li>Dedicated Team</li>
+                <li>Live Chattsupport</li>
+                <li>Prioriterad Respons</li>
+                <li>Dedikerat Team</li>
               </ul>
             </div>
           </div>
@@ -200,17 +200,17 @@ function App() {
       </section>
 
       <section className="section process-section">
-        <h2>Our Process</h2>
+        <h2>Vår Process</h2>
         <div className="process-container">
           <div className="process-step">
             <div className="process-number">01</div>
             <div className="process-content">
-              <h3>Discovery</h3>
-              <p>Understanding your vision and requirements</p>
+              <h3>Upptäckt</h3>
+              <p>Förstå din vision och krav</p>
               <div className="process-details">
-                <span>Requirements Gathering</span>
-                <span>Market Research</span>
-                <span>Project Scoping</span>
+                <span>Kravinhämtning</span>
+                <span>Marknadsundersökning</span>
+                <span>Projektomfattning</span>
               </div>
             </div>
             <div className="process-line"></div>
@@ -219,12 +219,12 @@ function App() {
           <div className="process-step">
             <div className="process-number">02</div>
             <div className="process-content">
-              <h3>Planning</h3>
-              <p>Creating detailed roadmap and architecture</p>
+              <h3>Planering</h3>
+              <p>Skapa detaljerad färdplan och arkitektur</p>
               <div className="process-details">
-                <span>Technical Design</span>
-                <span>Timeline Planning</span>
-                <span>Resource Allocation</span>
+                <span>Teknisk Design</span>
+                <span>Tidsplanering</span>
+                <span>Resursallokering</span>
               </div>
             </div>
             <div className="process-line"></div>
@@ -233,12 +233,12 @@ function App() {
           <div className="process-step">
             <div className="process-number">03</div>
             <div className="process-content">
-              <h3>Development</h3>
-              <p>Building your solution with latest technologies</p>
+              <h3>Utveckling</h3>
+              <p>Bygger din lösning med senaste tekniken</p>
               <div className="process-details">
-                <span>Agile Development</span>
-                <span>Regular Updates</span>
-                <span>Quality Assurance</span>
+                <span>Agil Utveckling</span>
+                <span>Regelbundna Uppdateringar</span>
+                <span>Kvalitetssäkring</span>
               </div>
             </div>
             <div className="process-line"></div>
@@ -247,12 +247,12 @@ function App() {
           <div className="process-step">
             <div className="process-number">04</div>
             <div className="process-content">
-              <h3>Launch</h3>
-              <p>Deploying and maintaining your project</p>
+              <h3>Lansering</h3>
+              <p>Driftsättning och underhåll av ditt projekt</p>
               <div className="process-details">
-                <span>Deployment</span>
-                <span>Monitoring</span>
-                <span>Continuous Support</span>
+                <span>Driftsättning</span>
+                <span>Övervakning</span>
+                <span>Kontinuerligt Stöd</span>
               </div>
             </div>
           </div>
@@ -261,10 +261,10 @@ function App() {
 
       <section className="section cta-section">
         <div className="cta-content">
-          <h2>Ready to Transform Your Ideas?</h2>
-          <p>Let's create something amazing together</p>
+          <h2>Redo att Förverkliga Dina Idéer?</h2>
+          <p>Låt oss skapa något fantastiskt tillsammans</p>
           <button className="pulse-button">
-            Get Started
+            Kom Igång
           </button>
         </div>
       </section>
@@ -287,23 +287,23 @@ function App() {
         <ul className="menu-items">
           <li onClick={() => handleNavigation('/')}>
             <AiOutlineHome className="menu-icon-item" />
-            <span>Home</span>
+            <span>Hem</span>
           </li>
           <li onClick={() => handleNavigation('/services')}>
             <MdOutlineDesignServices className="menu-icon-item" />
-            <span>Services</span>
+            <span>Tjänster</span>
           </li>
           <li onClick={() => handleNavigation('/prices')}>
             <FaMobileAlt className="menu-icon-item" />
-            <span>Prices</span>
+            <span>Priser</span>
           </li>
           <li onClick={() => handleNavigation('/about')}>
             <BsPeople className="menu-icon-item" />
-            <span>About us</span>
+            <span>Om oss</span>
           </li>
           <li className="language-selector">
             <div className="language-container">
-              <div className="language-label">Language:</div>
+              <div className="language-label">Språk:</div>
               <div className="language-options">
                 <span 
                   className={`language-option ${currentLanguage === 'sv' ? 'active' : ''}`}
