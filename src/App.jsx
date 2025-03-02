@@ -18,14 +18,32 @@ import Services from './Pages/Services'
 import Footer from './components/Footer'
 import ServicesInfo from './Pages/ServicesInfo'
 import Header from './components/Header'
+import Prices from './Pages/Prices'
+import { useLanguage } from './context/LanguageContext'
+import Svenska from './Languages/Svenska'
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState(0)
-  const [currentLanguage, setCurrentLanguage] = useState('sv')
   const navigate = useNavigate()
   const location = useLocation()
-
+  
+  // Use a try-catch to handle potential errors with the context
+  let languageContext;
+  try {
+    languageContext = useLanguage();
+  } catch (error) {
+    console.error("Language context error:", error);
+    // Fallback to default values
+    languageContext = {
+      currentLanguage: 'sv',
+      lang: Svenska,
+      toggleLanguage: () => console.log("Language toggle not available")
+    };
+  }
+  
+  const { currentLanguage, lang, toggleLanguage } = languageContext;
+  
   useEffect(() => {
     const handleScroll = () => {
       const sections = document.querySelectorAll('.section')
@@ -49,23 +67,31 @@ function App() {
     setIsMenuOpen(!isMenuOpen)
   }
 
-  const handleLanguageChange = (lang) => {
-    setCurrentLanguage(lang)
+  const handleLanguageChange = (langCode) => {
+    toggleLanguage(langCode)
     toggleMenu()
+  }
+
+  const navigateToPrices = () => {
+    navigate('/prices')
+  }
+
+  const navigateToServices = () => {
+    navigate('/services')
   }
 
   const HomePage = () => (
     <div className="home-content">
       <section className="section hero-section">
         <div className="hero-content">
-          <h1 className="glowing-text">Innovera & Skapa</h1>
-          <p className="hero-subtitle">Bygger Morgondagens Digitala Lösningar Idag</p>
+          <h1 className="glowing-text">{lang.heroTitle}</h1>
+          <p className="hero-subtitle">{lang.heroSubtitle}</p>
           <div className="hero-buttons">
-            <button className="glow-button">
-              Starta Projekt
+            <button className="glow-button" onClick={navigateToPrices}>
+              {lang.startProject}
             </button>
-            <button className="outline-button">
-              Visa Portfolio
+            <button className="outline-button" onClick={navigateToServices}>
+              {lang.seeServices}
             </button>
           </div>
         </div>
@@ -78,19 +104,18 @@ function App() {
       </section>
 
       <section className="section expertise-section">
-        <h2>Vår Expertis</h2>
+        <h2>{lang.expertiseTitle}</h2>
         <div className="expertise-container">
           <div className="expertise-card">
             <div className="expertise-icon-wrapper">
               <FaGlobe className="expertise-icon" />
             </div>
             <div className="expertise-content">
-              <h3>Webbutveckling</h3>
-              <p>Moderna webbapplikationer byggda med toppmodern teknik</p>
+              <h3>{lang.websiteTitle}</h3>
+              <p>{lang.websiteDescription}</p>
               <ul className="expertise-features">
-                <li>React & Next.js</li>
-                <li>Progressiva Webbappar</li>
-                <li>Responsiv Design</li>
+                <li>{lang.websiteFeature1}</li>
+                <li>{lang.websiteFeature2}</li>
               </ul>
             </div>
           </div>
@@ -102,12 +127,12 @@ function App() {
               </div>
             </div>
             <div className="expertise-content">
-              <h3>Apputveckling</h3>
-              <p>Nativa och plattformsövergripande mobila lösningar</p>
+              <h3>{lang.appsTitle}</h3>
+              <p>{lang.appsDescription}</p>
               <ul className="expertise-features">
-                <li>iOS & Android Nativ</li>
-                <li>React Native</li>
-                <li>Flutter Utveckling</li>
+                <li>{lang.appsFeature1}</li>
+                <li>{lang.appsFeature2}</li>
+                <li>{lang.appsFeature3}</li>
               </ul>
             </div>
           </div>
@@ -116,12 +141,12 @@ function App() {
               <MdSpeed className="expertise-icon" />
             </div>
             <div className="expertise-content">
-              <h3>Prestanda optimering</h3>
-              <p>Blixtsnabba lösningar för moderna applikationer</p>
+              <h3>{lang.fastTitle}</h3>
+              <p>{lang.fastDescription}</p>
               <ul className="expertise-features">
-                <li>Laddningstidsoptimering</li>
-                <li>Koddelning</li>
-                <li>Cachningsstrategier</li>
+                <li>{lang.fastFeature1}</li>
+                <li>{lang.fastFeature2}</li>
+                <li>{lang.fastFeature3}</li>
               </ul>
             </div>
           </div>
@@ -130,12 +155,12 @@ function App() {
               <MdSecurity className="expertise-icon" />
             </div>
             <div className="expertise-content">
-              <h3>Säker Arkitektur</h3>
-              <p>Säkerhetsimplementeringar av företagsklass</p>
+              <h3>{lang.securityTitle}</h3>
+              <p>{lang.securityDescription}</p>
               <ul className="expertise-features">
-                <li>Datakryptering</li>
-                <li>Säker Autentisering</li>
-                <li>Regelbundna Säkerhetsgranskningar</li>
+                <li>{lang.securityFeature1}</li>
+                <li>{lang.securityFeature2}</li>
+                <li>{lang.securityFeature3}</li>
               </ul>
             </div>
           </div>
@@ -144,12 +169,12 @@ function App() {
               <MdOutlineSupport className="expertise-icon" />
             </div>
             <div className="expertise-content">
-              <h3>Dygnet Runt Support</h3>
-              <p>Teknisk assistans dygnet runt</p>
+              <h3>{lang.supportTitle}</h3>
+              <p>{lang.supportDescription}</p>
               <ul className="expertise-features">
-                <li>Live Chattsupport</li>
-                <li>Prioriterad Respons</li>
-                <li>Dedikerat Team</li>
+                <li>{lang.supportFeature1}</li>
+                <li>{lang.supportFeature2}</li>
+                <li>{lang.supportFeature3}</li>
               </ul>
             </div>
           </div>
@@ -157,59 +182,59 @@ function App() {
       </section>
 
       <section className="section process-section">
-        <h2>Vår Process</h2>
+        <h2>{lang.processTitle}</h2>
         <div className="process-container">
           <div className="process-step">
-            <div className="process-number">01</div>
+            <div className="process-number">{lang.processStep1Number}</div>
             <div className="process-content">
-              <h3>Upptäckt</h3>
-              <p>Förstå din vision och krav</p>
+              <h3>{lang.processStep1Title}</h3>
+              <p>{lang.processStep1Description}</p>
               <div className="process-details">
-                <span>Kravinhämtning</span>
-                <span>Marknadsundersökning</span>
-                <span>Projektomfattning</span>
+                <span>{lang.processStep1Detail1}</span>
+                <span>{lang.processStep1Detail2}</span>
+                <span>{lang.processStep1Detail3}</span>
               </div>
             </div>
             <div className="process-line"></div>
           </div>
           
           <div className="process-step">
-            <div className="process-number">02</div>
+            <div className="process-number">{lang.processStep2Number}</div>
             <div className="process-content">
-              <h3>Planering</h3>
-              <p>Skapa detaljerad färdplan och arkitektur</p>
+              <h3>{lang.processStep2Title}</h3>
+              <p>{lang.processStep2Description}</p>
               <div className="process-details">
-                <span>Teknisk Design</span>
-                <span>Tidsplanering</span>
-                <span>Resursallokering</span>
+                <span>{lang.processStep2Detail1}</span>
+                <span>{lang.processStep2Detail2}</span>
+                <span>{lang.processStep2Detail3}</span>
               </div>
             </div>
             <div className="process-line"></div>
           </div>
           
           <div className="process-step">
-            <div className="process-number">03</div>
+            <div className="process-number">{lang.processStep3Number}</div>
             <div className="process-content">
-              <h3>Utveckling</h3>
-              <p>Bygger din lösning med senaste tekniken</p>
+              <h3>{lang.processStep3Title}</h3>
+              <p>{lang.processStep3Description}</p>
               <div className="process-details">
-                <span>Agil Utveckling</span>
-                <span>Regelbundna Uppdateringar</span>
-                <span>Kvalitetssäkring</span>
+                <span>{lang.processStep3Detail1}</span>
+                <span>{lang.processStep3Detail2}</span>
+                <span>{lang.processStep3Detail3}</span>
               </div>
             </div>
             <div className="process-line"></div>
           </div>
           
           <div className="process-step">
-            <div className="process-number">04</div>
+            <div className="process-number">{lang.processStep4Number}</div>
             <div className="process-content">
-              <h3>Lansering</h3>
-              <p>Driftsättning och underhåll av ditt projekt</p>
+              <h3>{lang.processStep4Title}</h3>
+              <p>{lang.processStep4Description}</p>
               <div className="process-details">
-                <span>Driftsättning</span>
-                <span>Övervakning</span>
-                <span>Kontinuerligt Stöd</span>
+                <span>{lang.processStep4Detail1}</span>
+                <span>{lang.processStep4Detail2}</span>
+                <span>{lang.processStep4Detail3}</span>
               </div>
             </div>
           </div>
@@ -218,10 +243,10 @@ function App() {
 
       <section className="section cta-section">
         <div className="cta-content">
-          <h2>Redo att Förverkliga Dina Idéer?</h2>
-          <p>Låt oss skapa något fantastiskt tillsammans</p>
-          <button className="pulse-button">
-            Kom Igång
+          <h2>{lang.ctaTitle}</h2>
+          <p>{lang.ctaSubtitle}</p>
+          <button className="pulse-button" onClick={navigateToPrices}>
+            {lang.ctaButton}
           </button>
         </div>
       </section>
@@ -234,15 +259,21 @@ function App() {
       <Menu 
         isMenuOpen={isMenuOpen}
         toggleMenu={toggleMenu}
-        currentLanguage={currentLanguage}
         handleLanguageChange={handleLanguageChange}
       />
       <div className="card">
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/*" element={<HomePage />} />
+          <Route path="/about-:lang" element={<AboutUs />} />
+          <Route path="/services-:lang" element={<Services />} />
+          <Route path="/services-info-:lang" element={<ServicesInfo />} />
+          <Route path="/prices-:lang" element={<Prices />} />
+          
+          {/* Add fallback routes without language suffix */}
           <Route path="/about" element={<AboutUs />} />
           <Route path="/services" element={<Services />} />
           <Route path="/services-info" element={<ServicesInfo />} />
+          <Route path="/prices" element={<Prices />} />
         </Routes>
       </div>
       <Footer />

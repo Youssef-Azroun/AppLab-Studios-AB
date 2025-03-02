@@ -6,28 +6,30 @@ import {
   FaAws
 } from 'react-icons/fa';
 import { SiFlutter, SiFirebase, SiGoogle } from 'react-icons/si';
+import { useLanguage } from '../context/LanguageContext';
 
 function ServicesInfo() {
   const location = useLocation();
   const navigate = useNavigate();
   const { service } = location.state || {};
+  const { lang } = useLanguage();
 
   const handleBack = () => {
     navigate('/services');
   };
 
   if (!service) {
-    return <div>Tjänsten hittades inte</div>;
+    return <div>{lang.servicesInfoNotFound}</div>;
   }
 
   const getTechStack = (title) => {
     switch (title) {
-      case 'Webbutveckling':
-        return ['React', 'Node.js', 'MongoDB', 'AWS'];
-      case 'Nativ Apputveckling':
-        return ['Swift', 'Kotlin', 'Firebase', 'Google Cloud'];
-      case 'Korsplattformsutveckling':
-        return ['React Native', 'Flutter', 'Firebase', 'REST APIs'];
+      case lang.servicesWebTitle:
+        return lang.techStackWeb;
+      case lang.servicesNativeTitle:
+        return lang.techStackNative;
+      case lang.servicesCrossTitle:
+        return lang.techStackCross;
       default:
         return [];
     }
@@ -35,73 +37,73 @@ function ServicesInfo() {
 
   const getDetailedFeatures = (title) => {
     switch (title) {
-      case 'Webbutveckling':
+      case lang.servicesWebTitle:
         return [
           { 
             icon: <FaReact />, 
-            title: 'Modern Frontend-arkitektur', 
-            description: 'Bygger responsiva och interaktiva användargränssnitt med React.js, Next.js och moderna state management-lösningar. Implementerar progressiva webbappar (PWA) för offline-funktionalitet.'
+            title: lang.webDetailedFeature1Title, 
+            description: lang.webDetailedFeature1Desc
           },
           { 
             icon: <FaServer />, 
-            title: 'Skalbara Backend-system', 
-            description: 'Utvecklar robusta Node.js/Express-backends med mikroservicearkitektur. Implementerar RESTful APIs och GraphQL-endpoints för effektiv datahantering.'
+            title: lang.webDetailedFeature2Title, 
+            description: lang.webDetailedFeature2Desc
           },
           { 
             icon: <FaDatabase />, 
-            title: 'Avancerade Databaslösningar', 
-            description: 'Designar optimerade databasscheman med MongoDB och PostgreSQL. Implementerar cachningsstrategier med Redis för förbättrad prestanda.'
+            title: lang.webDetailedFeature3Title, 
+            description: lang.webDetailedFeature3Desc
           },
           { 
             icon: <FaGithub />, 
-            title: 'Professionellt Utvecklingsflöde', 
-            description: 'Följer branschstandard Git-arbetsflöden med CI/CD-pipelines. Implementerar automatiserad testning och driftsättningsstrategier.'
+            title: lang.webDetailedFeature4Title, 
+            description: lang.webDetailedFeature4Desc
           }
         ];
-      case 'Nativ Apputveckling':
+      case lang.servicesNativeTitle:
         return [
           { 
             icon: <FaApple />, 
-            title: 'iOS-excellens', 
-            description: 'Skapar nativa iOS-applikationer med Swift och SwiftUI. Implementerar Apples senaste designriktlinjer och plattformsspecifika funktioner som Face ID och Apple Pay.'
+            title: lang.nativeDetailedFeature1Title, 
+            description: lang.nativeDetailedFeature1Desc
           },
           { 
             icon: <FaAndroid />, 
-            title: 'Android-expertis', 
-            description: 'Utvecklar Android-appar med Kotlin och Jetpack Compose. Använder Material Design-principer och Android-specifika funktioner som widgets och notiser.'
+            title: lang.nativeDetailedFeature2Title, 
+            description: lang.nativeDetailedFeature2Desc
           },
           { 
             icon: <SiFirebase />, 
-            title: 'Molnintegration', 
-            description: 'Implementerar Firebase-tjänster för realtidssynkronisering, autentisering och analys. Konfigurerar push-notiser och kraschrapportering.'
+            title: lang.nativeDetailedFeature3Title, 
+            description: lang.nativeDetailedFeature3Desc
           },
           { 
             icon: <SiGoogle />, 
-            title: 'Plattformstjänster', 
-            description: 'Integrerar plattformsspecifika tjänster som Google Maps, in-app-köp och social autentisering. Implementerar deep linking och app-indexering.'
+            title: lang.nativeDetailedFeature4Title, 
+            description: lang.nativeDetailedFeature4Desc
           }
         ];
-      case 'Korsplattformsutveckling':
+      case lang.servicesCrossTitle:
         return [
           { 
             icon: <FaReact />, 
-            title: 'React Native-lösningar', 
-            description: 'Bygger korsplattformsapplikationer med React Native och Expo. Implementerar nativa moduler och anpassade bryggor för plattformsspecifik funktionalitet.'
+            title: lang.crossDetailedFeature1Title, 
+            description: lang.crossDetailedFeature1Desc
           },
           { 
             icon: <SiFlutter />, 
-            title: 'Flutter-excellens', 
-            description: 'Skapar vackra appar med Flutter och Dart. Använder anpassade animationer och plattformsspecifika designmönster för en nativ känsla.'
+            title: lang.crossDetailedFeature2Title, 
+            description: lang.crossDetailedFeature2Desc
           },
           { 
             icon: <FaAws />, 
-            title: 'Molnarkitektur', 
-            description: 'Implementerar AWS-tjänster för skalbara backend-lösningar. Konfigurerar CDN, serverlösa funktioner och hanterade databaser.'
+            title: lang.crossDetailedFeature3Title, 
+            description: lang.crossDetailedFeature3Desc
           },
           { 
             icon: <FaCheckCircle />, 
-            title: 'Kvalitetssäkring', 
-            description: 'Omfattande teststrategi inklusive enhetstester, integrationstester och E2E-testning. Implementerar automatiserad UI-testning och prestandaövervakning.'
+            title: lang.crossDetailedFeature4Title, 
+            description: lang.crossDetailedFeature4Desc
           }
         ];
       default:
@@ -132,27 +134,32 @@ function ServicesInfo() {
     return <Icon className="service-icon" />;
   };
 
+  const techStack = getTechStack(service.title);
+  const detailedFeatures = getDetailedFeatures(service.title);
+
   return (
     <div className="service-info-container">
       <div className="service-info-header">
-        <div className="service-icon-large">{getIconComponent(service.iconType)}</div>
+        <div className="service-icon-large">
+          {getIconComponent(service.iconType)}
+        </div>
         <h1>{service.title}</h1>
         <p className="service-description">{service.description}</p>
       </div>
-
-      <div className="tech-stack-section">
-        <h2>Teknisk Stack</h2>
+      
+      <section className="tech-stack-section">
+        <h2>{lang.servicesInfoTechStackTitle}</h2>
         <div className="tech-pills">
-          {getTechStack(service.title).map((tech, index) => (
+          {techStack.map((tech, index) => (
             <span key={index} className="tech-pill">{tech}</span>
           ))}
         </div>
-      </div>
-
-      <div className="detailed-features">
-        <h2>Nyckelfunktioner</h2>
+      </section>
+      
+      <section className="detailed-features">
+        <h2>{lang.servicesInfoDetailedFeaturesTitle}</h2>
         <div className="features-grid">
-          {getDetailedFeatures(service.title).map((feature, index) => (
+          {detailedFeatures.map((feature, index) => (
             <div key={index} className="feature-card">
               <div className="feature-icon">{feature.icon}</div>
               <h3>{feature.title}</h3>
@@ -160,7 +167,7 @@ function ServicesInfo() {
             </div>
           ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }
