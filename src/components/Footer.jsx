@@ -1,7 +1,21 @@
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaLinkedin, FaGithub } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 import './Footer.css'
+import { useLanguage } from '../context/LanguageContext'
+import Svenska from '../Languages/Svenska'
 
 function Footer() {
+  // Use a try-catch to handle potential errors with the context
+  let lang;
+  try {
+    const context = useLanguage();
+    lang = context.lang;
+  } catch (error) {
+    console.error("Language context error in Footer:", error);
+    // Fallback to default values
+    lang = Svenska;
+  }
+
   const currentYear = new Date().getFullYear()
 
   return (
@@ -9,61 +23,56 @@ function Footer() {
       <div className="footer-content">
         <div className="footer-grid">
           <div className="footer-section">
-            <h3>About AppLab Studios</h3>
-            <p>We are a passionate team of developers and designers dedicated to creating innovative digital solutions that drive business success.</p>
+            <h3>{lang.footerAboutTitle}</h3>
+            <p>{lang.footerAboutDesc}</p>
           </div>
           
           <div className="footer-section">
-            <h3>Contact Us</h3>
+            <h3>{lang.footerContactTitle}</h3>
             <div className="contact-info">
               <div className="contact-item">
                 <FaPhone className="contact-icon" />
-                <a href="tel:0777777777">077-777 77 77</a>
+                <a href="tel:0777777777">{lang.footerPhone}</a>
               </div>
               <div className="contact-item">
                 <FaEnvelope className="contact-icon" />
-                <a href="mailto:info.support@applabstudios.se">info.support@applabstudios.se</a>
+                <a href="mailto:info.support@applabstudios.se">{lang.footerEmail}</a>
               </div>
               <div className="contact-item">
                 <FaMapMarkerAlt className="contact-icon" />
-                <span>Stockholm, Sweden</span>
+                <span>{lang.footerLocation}</span>
               </div>
             </div>
           </div>
-
+          
           <div className="footer-section">
-            <h3>Quick Links</h3>
+            <h3>{lang.footerLinksTitle}</h3>
             <ul className="footer-links">
-              <li><a href="/services">Our Services</a></li>
-              <li><a href="/prices">Pricing</a></li>
-              <li><a href="/about">About Us</a></li>
-              <li><a href="/privacy">Privacy Policy</a></li>
+              <li><Link to="/">{lang.footerHomeLink}</Link></li>
+              <li><Link to="/services">{lang.footerServicesLink}</Link></li>
+              <li><Link to="/about">{lang.footerAboutLink}</Link></li>
+              <li><Link to="/prices">{lang.footerPricesLink}</Link></li>
             </ul>
           </div>
-
+          
           <div className="footer-section">
-            <h3>Connect With Us</h3>
-            <div className="social-links">
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                <FaLinkedin className="social-icon" />
-              </a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-                <FaGithub className="social-icon" />
-              </a>
-            </div>
+            <h3>{lang.footerLegalTitle}</h3>
+            <ul className="footer-links">
+              <li><Link to="/privacy">{lang.footerPrivacyPolicy}</Link></li>
+              <li><Link to="/terms">{lang.footerTerms}</Link></li>
+            </ul>
           </div>
         </div>
-
+        
         <div className="footer-bottom">
-          <div className="copyright">
-            <p>&copy; {currentYear} AppLab Studios. All rights reserved.</p>
-          </div>
-          <div className="legal-links">
-            <a href="/terms">Terms of Service</a>
-            <span className="separator">|</span>
-            <a href="/privacy">Privacy Policy</a>
-            <span className="separator">|</span>
-            <a href="/cookies">Cookie Policy</a>
+          <p>&copy; {currentYear} {lang.footerCompanyName}. {lang.footerRights}.</p>
+          <div className="social-icons">
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+              <FaLinkedin />
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+              <FaGithub />
+            </a>
           </div>
         </div>
       </div>

@@ -144,20 +144,152 @@
   font-size: 1.1rem;
 }
 
+/* Add back button styles */
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 500;
+  color: #646cff;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(100, 108, 255, 0.15);
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  transform: translateX(-5px);
+  box-shadow: 0 4px 15px rgba(100, 108, 255, 0.25);
+}
+
+/* Improve existing mobile styles */
 @media (max-width: 768px) {
+  .service-info-container {
+    padding: 1.5rem;
+  }
+
   .service-info-header {
     padding: 2rem 1rem;
+    margin-bottom: 3rem;
   }
 
   .service-info-header h1 {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .service-icon-large {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .service-description {
-    font-size: 1.1rem;
+    font-size: 1rem;
+  }
+
+  .tech-stack-section h2,
+  .detailed-features h2 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .tech-pills {
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    padding: 0 0.5rem;
+  }
+
+  .tech-pill {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
   .feature-card {
-    padding: 2rem;
+    padding: 1.5rem;
+  }
+
+  .feature-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .feature-card p {
+    font-size: 0.95rem;
+  }
+
+  .icon-group {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+
+  .service-icon {
+    font-size: 1.8rem;
+  }
+
+  .service-icon-large .icon-group {
+    margin-bottom: 1rem;
+  }
+
+  .service-icon-large .service-icon {
+    font-size: 2.5rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 380px) {
+  .service-info-container {
+    padding: 1rem;
+  }
+
+  .service-info-header {
+    padding: 1.5rem 0.8rem;
+    border-radius: 20px;
+  }
+
+  .service-info-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .service-icon-large {
+    font-size: 2rem;
+  }
+
+  .tech-pill {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+
+  .back-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .service-description {
+    font-size: 0.9rem;
+  }
+}
+
+/* Fix for icon group on mobile */
+@media (max-width: 768px) {
+  .icon-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
   }
 }

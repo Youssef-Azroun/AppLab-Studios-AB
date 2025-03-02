@@ -11,10 +11,24 @@ import {
 import { BsPeople } from 'react-icons/bs'
 import { FaMobileAlt } from 'react-icons/fa'
 import './Menu.css'
+import { useLanguage } from '../context/LanguageContext'
+import Svenska from '../Languages/Svenska'
 
-function Menu({ isMenuOpen, toggleMenu, currentLanguage, handleLanguageChange }) {
+function Menu({ isMenuOpen, toggleMenu, handleLanguageChange }) {
   const navigate = useNavigate()
   const [scrollPosition, setScrollPosition] = useState(0)
+  
+  // Use context directly, with fallback
+  let currentLanguage, lang;
+  try {
+    const context = useLanguage();
+    currentLanguage = context.currentLanguage;
+    lang = context.lang;
+  } catch (error) {
+    console.log("Using fallback language in Menu");
+    currentLanguage = 'sv';
+    lang = Svenska;
+  }
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -45,23 +59,23 @@ function Menu({ isMenuOpen, toggleMenu, currentLanguage, handleLanguageChange })
         <ul className="menu-items">
           <li onClick={() => handleNavigation('/')}>
             <AiOutlineHome className="menu-icon-item" />
-            <span>Hem</span>
+            <span>{lang.menuHome}</span>
           </li>
           <li onClick={() => handleNavigation('/services')}>
             <MdOutlineDesignServices className="menu-icon-item" />
-            <span>Tjänster</span>
+            <span>{lang.menuServices}</span>
           </li>
           <li onClick={() => handleNavigation('/prices')}>
             <FaMobileAlt className="menu-icon-item" />
-            <span>Priser</span>
+            <span>{lang.menuPrices}</span>
           </li>
           <li onClick={() => handleNavigation('/about')}>
             <BsPeople className="menu-icon-item" />
-            <span>Om oss</span>
+            <span>{lang.menuAbout}</span>
           </li>
           <li className="language-selector">
             <div className="language-container">
-              <div className="language-label">Språk:</div>
+              <div className="language-label">{lang.menuLanguage}</div>
               <div className="language-options">
                 <span 
                   className={`language-option ${currentLanguage === 'sv' ? 'active' : ''}`}

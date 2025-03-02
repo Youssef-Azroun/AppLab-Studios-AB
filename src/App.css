@@ -376,7 +376,8 @@
   font-size: 0.9rem;
   padding: 0.3rem 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  text-align: left;
 }
 
 .expertise-features li::before {
@@ -384,6 +385,9 @@
   color: #646cff;
   margin-right: 0.5rem;
   font-size: 1.2rem;
+  min-width: 10px;
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 .process-container {
@@ -531,4 +535,63 @@
 
 .menu-open .header {
   z-index: 85;
+}
+
+@media (max-width: 480px) {
+  .expertise-features li {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 0.3rem;
+    padding-right: 0.5rem;
+    word-wrap: break-word;
+    hyphens: auto;
+    text-align: left !important;
+  }
+  
+  .expertise-features li::before {
+    margin-top: 0.1rem;
+  }
+  
+  .expertise-card {
+    padding: 1.2rem;
+  }
+  
+  .expertise-content {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .expertise-content p {
+    font-size: 0.9rem;
+  }
+  
+  .expertise-content .expertise-features {
+    display: inline-block;
+    text-align: left;
+    width: auto;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 380px) {
+  .expertise-features li {
+    font-size: 0.8rem;
+    line-height: 1.3;
+    text-align: left !important;
+  }
+  
+  .expertise-content h3 {
+    font-size: 1.2rem;
+  }
+  
+  .expertise-content p {
+    font-size: 0.85rem;
+  }
+  
+  /* Specific fix for the longer text */
+  .expertise-features li:contains("Works even with poor internet connection") {
+    text-align: left !important;
+    display: flex;
+    align-items: flex-start;
+  }
 }

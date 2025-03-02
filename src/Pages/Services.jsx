@@ -9,9 +9,11 @@ import {
   FaReact
 } from 'react-icons/fa'
 import { SiFlutter } from 'react-icons/si'
+import { useLanguage } from '../context/LanguageContext'
 
 function Services() {
   const navigate = useNavigate()
+  const { lang } = useLanguage()
 
   useEffect(() => {
     const observerOptions = {
@@ -55,9 +57,14 @@ function Services() {
   const services = [
     {
       icon: <FaGlobe className="service-icon" />,
-      title: "Webbutveckling",
-      description: "Skräddarsydda webbapplikationer byggda med moderna teknologier och bästa praxis.",
-      features: ["Responsiv Design", "Frontend-utveckling", "Backend-integration", "Prestandaoptimering"]
+      title: lang.servicesWebTitle,
+      description: lang.servicesWebDescription,
+      features: [
+        lang.servicesWebFeature1, 
+        lang.servicesWebFeature2, 
+        lang.servicesWebFeature3, 
+        lang.servicesWebFeature4
+      ]
     },
     {
       icon: (
@@ -66,9 +73,14 @@ function Services() {
           <FaAndroid className="service-icon" />
         </div>
       ),
-      title: "Nativ Apputveckling",
-      description: "Nativa mobilapplikationer för iOS- och Android-plattformar.",
-      features: ["iOS-utveckling (Swift/SwiftUI)", "Android-utveckling (Kotlin)", "Nativ Prestanda", "Plattformsspecifika Funktioner"]
+      title: lang.servicesNativeTitle,
+      description: lang.servicesNativeDescription,
+      features: [
+        lang.servicesNativeFeature1, 
+        lang.servicesNativeFeature2, 
+        lang.servicesNativeFeature3, 
+        lang.servicesNativeFeature4
+      ]
     },
     {
       icon: (
@@ -77,18 +89,23 @@ function Services() {
           <SiFlutter className="service-icon" />
         </div>
       ),
-      title: "Korsplattformsutveckling",
-      description: "Effektiva multiplattformslösningar med React Native och Flutter.",
-      features: ["React Native-utveckling", "Flutter-utveckling", "Återanvändbar Kod", "Konsekvent UI/UX"]
+      title: lang.servicesCrossTitle,
+      description: lang.servicesCrossDescription,
+      features: [
+        lang.servicesCrossFeature1, 
+        lang.servicesCrossFeature2, 
+        lang.servicesCrossFeature3, 
+        lang.servicesCrossFeature4
+      ]
     }
   ]
 
   return (
     <div className="services">
       <section className="hero animate-on-scroll">
-        <h1>Våra Tjänster</h1>
+        <h1>{lang.servicesHeroTitle}</h1>
         <p className="tagline">
-          Professionella utvecklingslösningar för webb och mobila plattformar
+          {lang.servicesHeroTagline}
         </p>
       </section>
 
