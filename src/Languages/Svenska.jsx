@@ -231,7 +231,80 @@ const Svenska = {
   footerPrivacyPolicy: "Integritetspolicy",
   footerTerms: "Användarvillkor",
   footerCopyright: "Upphovsrätt",
-  footerRights: "Alla rättigheter förbehållna"
+  footerRights: "Alla rättigheter förbehållna",
+  
+  // Price Calculator
+  priceCalculatorTitle: "Projektkostnadskalkylator",
+  priceCalculatorSubtitle: "Svara på några enkla frågor för att få en uppskattning för ditt projekt",
+  priceCalculateButton: "Beräkna Pris",
+  priceNextButton: "Nästa",
+  pricePreviousButton: "Föregående",
+  priceStartOverButton: "Börja Om",
+  priceContactButton: "Kontakta Oss",
+  priceEstimateTitle: "Din Projektuppskattning",
+  priceEstimateNote: "Detta är ett uppskattat pris baserat på dina krav. Det slutliga priset kan variera beroende på detaljerade specifikationer.",
+  priceBreakdownTitle: "Prisuppdelning",
+  priceTotal: "Total Uppskattning",
+  
+  // Price Calculator Questions
+  pricePlatformQuestion: "Vilken typ av app eller webbplats behöver du?",
+  pricePlatformWebsite: "Webbplats",
+  pricePlatformWebsiteDesc: "En webbplats som fungerar på alla enheter",
+  pricePlatformIos: "iPhone/iPad-app",
+  pricePlatformIosDesc: "En app för Apple-enheter",
+  pricePlatformAndroid: "Android-app",
+  pricePlatformAndroidDesc: "En app för Android-telefoner och surfplattor",
+  pricePlatformBoth: "Både iPhone & Android",
+  pricePlatformBothDesc: "Appar som fungerar på både Apple- och Android-enheter",
+  pricePlatformAll: "Webbplats + Mobilappar",
+  pricePlatformAllDesc: "Komplett lösning: webbplats och mobilappar",
+  
+  priceSizeQuestion: "Hur stort är ditt projekt?",
+  priceSizeSmall: "Litet",
+  priceSizeSmallDesc: "Grundläggande funktionalitet, 5-10 skärmar",
+  priceSizeMedium: "Medium",
+  priceSizeMediumDesc: "Fler funktioner, 10-20 skärmar",
+  priceSizeLarge: "Stort",
+  priceSizeLargeDesc: "Komplex funktionalitet, 20+ skärmar",
+  
+  priceDesignQuestion: "Vilken typ av design behöver du?",
+  priceDesignBasic: "Grundläggande Design",
+  priceDesignBasicDesc: "Enkel, funktionell design",
+  priceDesignCustom: "Anpassad Design",
+  priceDesignCustomDesc: "Unik, varumärkesanpassad design",
+  priceDesignPremium: "Premium Design",
+  priceDesignPremiumDesc: "Högkvalitativ, polerad design med animationer",
+  
+  priceFeaturesQuestion: "Vilka funktioner behöver du?",
+  priceFeatureAuth: "Användarautentisering",
+  priceFeatureAuthDesc: "Inloggning, registrering, användarprofiler",
+  priceFeaturePayment: "Betalningshantering",
+  priceFeaturePaymentDesc: "Ta emot betalningar från användare",
+  priceFeatureAdmin: "Administratörspanel",
+  priceFeatureAdminDesc: "Hantera innehåll och användare",
+  priceFeatureMedia: "Mediauppladdningar",
+  priceFeatureMediaDesc: "Låt användare ladda upp foton/videor",
+  priceFeatureSearch: "Sökfunktionalitet",
+  priceFeatureSearchDesc: "Avancerad sökning och filtrering",
+  priceFeatureMultilingual: "Flera Språk",
+  priceFeatureMultilingualDesc: "Stöd för flera språk",
+  priceFeatureChat: "Chatt/Meddelanden",
+  priceFeatureChatDesc: "Kommunikation i realtid",
+  priceFeatureAnalytics: "Analys & Rapportering",
+  priceFeatureAnalyticsDesc: "Spåra användarbeteende och mätvärden",
+  
+  priceTimelineQuestion: "Vad är din tidslinje?",
+  priceTimelineStandard: "Standard",
+  priceTimelineStandardDesc: "3-4 månader",
+  priceTimelineFast: "Snabbspår",
+  priceTimelineFastDesc: "2-3 månader (+20% kostnad)",
+  priceTimelineUrgent: "Brådskande",
+  priceTimelineUrgentDesc: "1-2 månader (+50% kostnad)",
+  
+  // Timeline factors
+  priceTimelineStandardFactor: "Standard tidslinje",
+  priceTimelineFastFactor: "Snabb leverans",
+  priceTimelineUrgentFactor: "Brådskande leverans"
 };
 
 export default Svenska;
