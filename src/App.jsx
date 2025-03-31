@@ -19,6 +19,7 @@ import Footer from './components/Footer'
 import ServicesInfo from './Pages/ServicesInfo'
 import Header from './components/Header'
 import Prices from './Pages/Prices'
+import Terms from './components/Terms'
 import { useLanguage } from './context/LanguageContext'
 import Svenska from './Languages/Svenska'
 
@@ -268,6 +269,7 @@ function App() {
           <Route path="/services-:lang" element={<Services />} />
           <Route path="/services-info-:lang" element={<ServicesInfo />} />
           <Route path="/prices-:lang" element={<Prices />} />
+          <Route path="/terms" element={<Terms />} />
           
           {/* Add fallback routes without language suffix */}
           <Route path="/about" element={<AboutUs />} />
