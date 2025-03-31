@@ -1,4 +1,4 @@
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaLinkedin, FaGithub } from 'react-icons/fa'
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaInstagram, FaTiktok } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import './Footer.css'
 import { useLanguage } from '../context/LanguageContext'
@@ -32,11 +32,11 @@ function Footer() {
             <div className="contact-info">
               <div className="contact-item">
                 <FaPhone className="contact-icon" />
-                <a href="tel:0777777777">{lang.footerPhone}</a>
+                <a href="tel:0700363789">{lang.footerPhone}</a>
               </div>
               <div className="contact-item">
                 <FaEnvelope className="contact-icon" />
-                <a href="mailto:info.support@applabstudios.se">{lang.footerEmail}</a>
+                <a href="mailto:youssef.azroun.applab@gmail.com">{lang.footerEmail}</a>
               </div>
               <div className="contact-item">
                 <FaMapMarkerAlt className="contact-icon" />
@@ -58,7 +58,7 @@ function Footer() {
           <div className="footer-section">
             <h3>{lang.footerLegalTitle}</h3>
             <ul className="footer-links">
-              <li><Link to="/privacy">{lang.footerPrivacyPolicy}</Link></li>
+              <li><a href="https://www.freeprivacypolicy.com/live/a1b4d794-ea77-4c0f-85b7-d5f3bf4afc55" target="_blank" rel="noopener noreferrer">{lang.footerPrivacyPolicy}</a></li>
               <li><Link to="/terms">{lang.footerTerms}</Link></li>
             </ul>
           </div>
@@ -67,11 +67,14 @@ function Footer() {
         <div className="footer-bottom">
           <p>&copy; {currentYear} {lang.footerCompanyName}. {lang.footerRights}.</p>
           <div className="social-icons">
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-              <FaLinkedin />
+            <a href="https://www.facebook.com/share/1Z9ngsBNhC/" target="_blank" rel="noopener noreferrer">
+              <FaFacebook />
             </a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-              <FaGithub />
+            <a href="https://www.instagram.com/applabstudios.1?igsh=MWxodHVwN3cwbDV6Zg==" target="_blank" rel="noopener noreferrer">
+              <FaInstagram />
+            </a>
+            <a href="https://www.tiktok.com/@applab_studios1?_t=ZN-8v9ahlF4FHC&_r=1" target="_blank" rel="noopener noreferrer">
+              <FaTiktok />
             </a>
           </div>
         </div>

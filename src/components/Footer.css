@@ -116,19 +116,21 @@
   color: #646cff;
 }
 
-.social-links {
+.social-icons {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
+  align-items: center;
 }
 
-.social-icon {
-  font-size: 1.5rem;
+.social-icons a {
   color: #646cff;
-  transition: transform 0.3s ease;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
-.social-icon:hover {
+.social-icons a:hover {
   transform: translateY(-3px);
+  color: #535bf2;
 }
 
 .footer-bottom {
