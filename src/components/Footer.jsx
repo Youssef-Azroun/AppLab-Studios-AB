@@ -1,4 +1,4 @@
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaInstagram, FaTiktok } from 'react-icons/fa'
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaInstagram, FaTiktok, FaWhatsapp } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import './Footer.css'
 import { useLanguage } from '../context/LanguageContext'
@@ -75,6 +75,9 @@ function Footer() {
             </a>
             <a href="https://www.tiktok.com/@applab_studios1?_t=ZN-8v9ahlF4FHC&_r=1" target="_blank" rel="noopener noreferrer">
               <FaTiktok />
+            </a>
+            <a href="https://wa.me/46700363789" target="_blank" rel="noopener noreferrer">
+              <FaWhatsapp />
             </a>
           </div>
         </div>
