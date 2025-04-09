@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { FaCalculator } from 'react-icons/fa';
+import { FaCalculator, FaCheckCircle } from 'react-icons/fa';
+import emailjs from '@emailjs/browser';
 import './Contact.css';
 
 const Contact = () => {
   const location = useLocation();
   const { invoiceData } = location.state || {};
+  const form = useRef();
   
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
+  
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // Get language context
   let lang;
@@ -96,8 +102,51 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    setLoading(true);
+    setError(null);
+    
+    // Prepare additional information from invoice data
+    let additionalInfo = '';
+    if (invoiceData) {
+      additionalInfo = `
+Platform: ${platformLabels[invoiceData.platform]}
+Size: ${invoiceData.size}
+Features: ${invoiceData.features.map(f => featureLabels[f]).join(', ')}
+Design: ${designLabels[invoiceData.design]}
+Timeline: ${timelineFactors[invoiceData.timeline]}
+Estimated Price: ${invoiceData.price.toLocaleString()} SEK
+      `;
+    }
+    
+    // Send email using EmailJS to first template
+    emailjs.sendForm(
+      'service_n7pw6le',
+      'template_v90w3vs',
+      form.current,
+      '2IvRj9KXG23N0kkUR'
+    )
+    .then((result) => {
+      console.log('Email sent successfully to first template:', result.text);
+      
+      // Now send to the second template
+      return emailjs.sendForm(
+        'service_n7pw6le',
+        'template_00u3vym',
+        form.current,
+        '2IvRj9KXG23N0kkUR'
+      );
+    })
+    .then((result) => {
+      console.log('Email sent successfully to second template:', result.text);
+      setSubmitted(true);
+      setLoading(false);
+      setFormData({ name: '', email: '', message: '' });
+    })
+    .catch((error) => {
+      console.error('Error sending email:', error);
+      setError('Failed to send email. Please try again later.');
+      setLoading(false);
+    });
   };
 
   const renderPriceBreakdown = () => {
@@ -175,47 +224,78 @@ const Contact = () => {
       <div className={`price-result animate-on-scroll visible`}>
         <div className="contact-form-section">
           <h3>{lang.contactFormTitle}</h3>
-          <form onSubmit={handleSubmit} className="contact-form">
-            <div className="form-group">
-              <label htmlFor="name">{lang.contactFormName}</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                required
-              />
+          
+          {submitted ? (
+            <div className="success-message">
+              <FaCheckCircle className="success-icon" />
+              <h4>Thank you for your message!</h4>
+              <p>We will get back to you as soon as possible.</p>
             </div>
+          ) : (
+            <form ref={form} onSubmit={handleSubmit} className="contact-form">
+              <div className="form-group">
+                <label htmlFor="name">{lang.contactFormName}</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
 
-            <div className="form-group">
-              <label htmlFor="email">{lang.contactFormEmail}</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
+              <div className="form-group">
+                <label htmlFor="email">{lang.contactFormEmail}</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
 
-            <div className="form-group">
-              <label htmlFor="message">{lang.contactFormMessage}</label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                rows="5"
-                required
-              ></textarea>
-            </div>
+              <div className="form-group">
+                <label htmlFor="message">{lang.contactFormMessage}</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  rows="5"
+                  required
+                ></textarea>
+              </div>
+              
+              {/* Hidden fields for the project details */}
+              {invoiceData && (
+                <input 
+                  type="hidden" 
+                  name="project_details" 
+                  value={`
+Platform: ${platformLabels[invoiceData.platform]}
+Size: ${invoiceData.size}
+Features: ${invoiceData.features.map(f => featureLabels[f]).join(', ')}
+Design: ${designLabels[invoiceData.design]}
+Timeline: ${timelineFactors[invoiceData.timeline]}
+Estimated Price: ${invoiceData.price.toLocaleString()} SEK
+                  `}
+                />
+              )}
 
-            <button type="submit" className="submit-button">
-              {lang.contactFormSubmit}
-            </button>
-          </form>
+              {error && <div className="error-message">{error}</div>}
+
+              <button 
+                type="submit" 
+                className={`submit-button ${loading ? 'loading' : ''}`}
+                disabled={loading}
+              >
+                {loading ? 'Sending...' : lang.contactFormSubmit}
+              </button>
+            </form>
+          )}
         </div>
         
         <div className="result-header">
