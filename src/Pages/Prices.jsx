@@ -3,6 +3,7 @@ import { FaArrowRight, FaArrowLeft, FaCheckCircle, FaCalculator, FaMobileAlt, Fa
 import './Prices.css'
 import { useLanguage } from '../context/LanguageContext'
 import Svenska from '../Languages/Svenska'
+import { useNavigate } from 'react-router-dom'
 
 const Prices = () => {
   const [currentStep, setCurrentStep] = useState(0)
@@ -10,6 +11,8 @@ const Prices = () => {
   const [showResult, setShowResult] = useState(false)
   const [price, setPrice] = useState(0)
   const [animateResult, setAnimateResult] = useState(false)
+  
+  const navigate = useNavigate()
   
   // Get language context
   let lang;
@@ -302,11 +305,20 @@ const Prices = () => {
   }
 
   const handleContact = () => {
-    // Do nothing for now
-    console.log('Contact button clicked - functionality not implemented yet')
+    const invoiceData = {
+      platform: selections.platform,
+      size: selections.size,
+      features: selections.features,
+      design: selections.design,
+      timeline: selections.timeline,
+      price: price,
+      platformLabel: getPlatformLabel(),
+      featureLabels: selections.features.map(feature => featureLabels[feature]),
+      designLabel: designLabels[selections.design],
+      timelineFactor: timelineFactors[selections.timeline]
+    };
     
-    // Uncomment this when ready to implement
-    // window.location.href = '/contact'
+    navigate('/contact', { state: { invoiceData } });
   }
 
   const calculatePrice = () => {

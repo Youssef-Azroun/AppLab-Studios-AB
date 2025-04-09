@@ -305,6 +305,13 @@ const English = {
   priceTimelineStandardFactor: "Standard timeline",
   priceTimelineFastFactor: "Fast-track delivery",
   priceTimelineUrgentFactor: "Urgent delivery",
+  
+  // Contact Form
+  contactFormTitle: "Contact us",
+  contactFormName: "Name",
+  contactFormEmail: "Email",
+  contactFormMessage: "Message",
+  contactFormSubmit: "Send Message",
 };
 
 export default English;

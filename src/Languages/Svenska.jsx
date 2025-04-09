@@ -304,7 +304,14 @@ const Svenska = {
   // Timeline factors
   priceTimelineStandardFactor: "Standard tidslinje",
   priceTimelineFastFactor: "Snabb leverans",
-  priceTimelineUrgentFactor: "Brådskande leverans"
+  priceTimelineUrgentFactor: "Brådskande leverans",
+  
+  // Contact Form
+  contactFormTitle: "Kontakta oss",
+  contactFormName: "Namn",
+  contactFormEmail: "E-post",
+  contactFormMessage: "Meddelande",
+  contactFormSubmit: "Skicka Meddelande",
 };
 
 export default Svenska;
