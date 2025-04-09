@@ -22,6 +22,7 @@ import Prices from './Pages/Prices'
 import Terms from './components/Terms'
 import { useLanguage } from './context/LanguageContext'
 import Svenska from './Languages/Svenska'
+import Contact from './Pages/Contact'
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -270,6 +271,7 @@ function App() {
           <Route path="/services-info-:lang" element={<ServicesInfo />} />
           <Route path="/prices-:lang" element={<Prices />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/contact" element={<Contact />} />
           
           {/* Add fallback routes without language suffix */}
           <Route path="/about" element={<AboutUs />} />
