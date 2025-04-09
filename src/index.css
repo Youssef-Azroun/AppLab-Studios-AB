@@ -84,3 +84,25 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Global font size adjustments for mobile devices */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px; /* Slightly smaller base font size for tablets */
+  }
+  
+  body {
+    font-size: 14px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 380px) {
+  html {
+    font-size: 12px; /* Even smaller base font size for phones */
+  }
+  
+  body {
+    font-size: 12px;
+  }
+}
