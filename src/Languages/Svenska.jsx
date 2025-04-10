@@ -304,7 +304,20 @@ const Svenska = {
   // Timeline factors
   priceTimelineStandardFactor: "Standard tidslinje",
   priceTimelineFastFactor: "Snabb leverans",
-  priceTimelineUrgentFactor: "Brådskande leverans",
+  priceTimelineUrgentFactor: "Brådskande",
+  
+  // Payment options
+  pricePaymentOptionsFull: "Full Betalning",
+  pricePaymentOptionsSubscription: "Månadsabonnemang",
+  priceSubscriptionTerm: "Abonnemangsvillkor",
+  priceSubscriptionCommitment: "12 månaders minsta åtagande",
+  priceMonthlySubscription: "Månadsbetalning för abonnemang",
+  priceMonthlyPlatformFee: "Månadsavgift för plattform",
+  priceMonthlyFeeWithCommission: "Månadsavgift (inklusive 20% provision)",
+  priceMonthlyFeeBreakdown: "Uppdelning av månadsavgift:",
+  pricePlatformMaintenance: "Plattformsunderhåll:",
+  priceCommission: "Provision (20%):",
+  priceTotalMonthlyCost: "Total månadskostnad (Abonnemang + Plattformsavgift)",
   
   // Contact Form
   contactFormTitle: "Kontakta oss",

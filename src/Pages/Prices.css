@@ -394,6 +394,42 @@
   padding-top: 1.5rem;
 }
 
+.breakdown-item.monthly-fee {
+  font-weight: 700;
+  color: #646cff;
+  border-top: 2px solid #646cff;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-bottom: none;
+}
+
+.breakdown-item.monthly-details {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #ddd;
+}
+
+.monthly-details-content {
+  margin-top: 1rem;
+  padding-left: 1rem;
+}
+
+.monthly-detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.monthly-detail-item.commission {
+  color: #646cff;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #eee;
+}
+
 /* Result Actions */
 .result-actions {
   display: flex;
@@ -505,6 +541,14 @@
     width: 35px;
     height: 35px;
     font-size: 0.9rem;
+  }
+  
+  .monthly-detail-item {
+    font-size: 0.9rem;
+  }
+  
+  .monthly-details-content {
+    padding-left: 0.5rem;
   }
 }
 

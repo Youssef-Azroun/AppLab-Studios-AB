@@ -304,7 +304,20 @@ const English = {
   // Timeline factors
   priceTimelineStandardFactor: "Standard timeline",
   priceTimelineFastFactor: "Fast-track delivery",
-  priceTimelineUrgentFactor: "Urgent delivery",
+  priceTimelineUrgentFactor: "Urgent",
+  
+  // Payment options
+  pricePaymentOptionsFull: "Full Payment",
+  pricePaymentOptionsSubscription: "Monthly Subscription",
+  priceSubscriptionTerm: "Subscription Term",
+  priceSubscriptionCommitment: "12 months minimum commitment",
+  priceMonthlySubscription: "Monthly Subscription Payment",
+  priceMonthlyPlatformFee: "Monthly Platform Fee",
+  priceMonthlyFeeWithCommission: "Monthly Fee (including 20% commission)",
+  priceMonthlyFeeBreakdown: "Monthly Fee Breakdown:",
+  pricePlatformMaintenance: "Platform Maintenance:",
+  priceCommission: "Commission (20%):",
+  priceTotalMonthlyCost: "Total Monthly Cost (Subscription + Platform Fee)",
   
   // Contact Form
   contactFormTitle: "Contact us",

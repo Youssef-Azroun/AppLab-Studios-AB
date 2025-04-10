@@ -56,7 +56,18 @@ const Contact = () => {
       priceDesignPremium: "Premium",
       priceTimelineStandardFactor: "Standard",
       priceTimelineFastFactor: "Fast",
-      priceTimelineUrgentFactor: "Urgent"
+      priceTimelineUrgentFactor: "Urgent",
+      pricePaymentOptionsFull: "Full Payment",
+      pricePaymentOptionsSubscription: "Monthly Subscription",
+      priceSubscriptionTerm: "Subscription Term",
+      priceSubscriptionCommitment: "12 months minimum commitment",
+      priceMonthlySubscription: "Monthly Subscription Payment",
+      priceMonthlyPlatformFee: "Monthly Platform Fee",
+      priceMonthlyFeeWithCommission: "Monthly Fee (including 20% commission)",
+      priceMonthlyFeeBreakdown: "Monthly Fee Breakdown:",
+      pricePlatformMaintenance: "Platform Maintenance:",
+      priceCommission: "Commission (20%):",
+      priceTotalMonthlyCost: "Total Monthly Cost (Subscription + Platform Fee)"
     };
   }
 
@@ -108,13 +119,26 @@ const Contact = () => {
     // Prepare additional information from invoice data
     let additionalInfo = '';
     if (invoiceData) {
+      // Determine primary price display based on payment option
+      const paymentInfo = invoiceData.paymentOption === 'full' 
+        ? `Estimated Price: ${invoiceData.price.toLocaleString()} SEK (${lang.pricePaymentOptionsFull})` 
+        : `Monthly Subscription: ${invoiceData.monthlyPayment.toLocaleString()} SEK/month (${lang.priceSubscriptionCommitment})`;
+      
       additionalInfo = `
 Platform: ${platformLabels[invoiceData.platform]}
 Size: ${invoiceData.size}
 Features: ${invoiceData.features.map(f => featureLabels[f]).join(', ')}
 Design: ${designLabels[invoiceData.design]}
 Timeline: ${timelineFactors[invoiceData.timeline]}
-Estimated Price: ${invoiceData.price.toLocaleString()} SEK
+${paymentInfo}
+
+${lang.priceMonthlyFeeBreakdown}
+${lang.pricePlatformMaintenance} ${invoiceData.monthlyFeeBreakdown.platformMaintenance.toLocaleString()} SEK
+${Object.entries(invoiceData.monthlyFeeBreakdown.features).map(([feature, data]) => 
+  `${data.label}: ${data.cost.toLocaleString()} SEK`
+).join('\n')}
+${lang.priceCommission} ${invoiceData.monthlyFeeBreakdown.commission.toLocaleString()} SEK
+Total Monthly Fee: ${invoiceData.monthlyFeeBreakdown.total.toLocaleString()} SEK
       `;
     }
     
@@ -153,28 +177,28 @@ Estimated Price: ${invoiceData.price.toLocaleString()} SEK
     if (!invoiceData) return null;
 
     const platformCosts = {
-      'website': 15000,
-      'ios': 20000,
-      'android': 20000,
-      'both': 30000,
-      'all': 40000
+      'website': 7500,
+      'ios': 10000,
+      'android': 10000,
+      'both': 15000,
+      'all': 20000
     };
 
     const featureCosts = {
-      'auth': 5000,
-      'payment': 8000,
-      'admin': 10000,
-      'media': 7000,
-      'search': 6000,
-      'multilingual': 8000,
-      'chat': 12000,
-      'analytics': 9000
+      'auth': 2500,
+      'payment': 4000,
+      'admin': 5000,
+      'media': 3500,
+      'search': 3000,
+      'multilingual': 4000,
+      'chat': 6000,
+      'analytics': 4500
     };
 
     const designCosts = {
       'basic': 0,
-      'custom': 10000,
-      'premium': 20000
+      'custom': 5000,
+      'premium': 10000
     };
 
     const sizeMultipliers = {
@@ -184,36 +208,112 @@ Estimated Price: ${invoiceData.price.toLocaleString()} SEK
     };
 
     const platformWithSize = platformCosts[invoiceData.platform] * sizeMultipliers[invoiceData.size];
+    
+    // Calculate monthly costs if subscription selected
+    const leaseDuration = invoiceData.leaseDuration || 12;
+    const getMonthlyAmount = (amount) => Math.round(amount / leaseDuration);
 
     return (
       <>
-        <div className="breakdown-item">
-          <span>{platformLabels[invoiceData.platform]}</span>
-          <span>{platformWithSize.toLocaleString()} SEK</span>
-        </div>
-        
-        {invoiceData.features.map(feature => (
-          <div className="breakdown-item" key={feature}>
-            <span>{featureLabels[feature]}</span>
-            <span>{featureCosts[feature].toLocaleString()} SEK</span>
-          </div>
-        ))}
-        
-        <div className="breakdown-item">
-          <span>{designLabels[invoiceData.design]}</span>
-          <span>{designCosts[invoiceData.design].toLocaleString()} SEK</span>
-        </div>
-        
-        {(invoiceData.timeline === 'fast' || invoiceData.timeline === 'urgent') && (
-          <div className="breakdown-item">
-            <span>{timelineFactors[invoiceData.timeline]}</span>
-            <span>{invoiceData.timeline === 'fast' ? '+20%' : '+50%'}</span>
-          </div>
+        {invoiceData.paymentOption === 'full' ? (
+          // Full payment breakdown
+          <>
+            <div className="breakdown-item">
+              <span>{platformLabels[invoiceData.platform]}</span>
+              <span>{platformWithSize.toLocaleString()} SEK</span>
+            </div>
+            
+            {invoiceData.features.map(feature => (
+              <div className="breakdown-item" key={feature}>
+                <span>{featureLabels[feature]}</span>
+                <span>{featureCosts[feature].toLocaleString()} SEK</span>
+              </div>
+            ))}
+            
+            <div className="breakdown-item">
+              <span>{designLabels[invoiceData.design]}</span>
+              <span>{designCosts[invoiceData.design].toLocaleString()} SEK</span>
+            </div>
+            
+            {(invoiceData.timeline === 'fast' || invoiceData.timeline === 'urgent') && (
+              <div className="breakdown-item">
+                <span>{timelineFactors[invoiceData.timeline]}</span>
+                <span>{invoiceData.timeline === 'fast' ? '+20%' : '+50%'}</span>
+              </div>
+            )}
+            
+            <div className="breakdown-item total">
+              <span>{lang.priceTotal}</span>
+              <span>{invoiceData.price.toLocaleString()} SEK</span>
+            </div>
+            
+            <div className="breakdown-item monthly-fee">
+              <span>{lang.priceMonthlyFeeWithCommission}</span>
+              <span>{invoiceData.monthlyFee.toLocaleString()} SEK/month</span>
+            </div>
+          </>
+        ) : (
+          // Monthly subscription breakdown
+          <>
+            <div className="breakdown-item">
+              <span>{platformLabels[invoiceData.platform]}</span>
+              <span>{getMonthlyAmount(platformWithSize).toLocaleString()} SEK/month</span>
+            </div>
+            
+            {invoiceData.features.map(feature => (
+              <div className="breakdown-item" key={feature}>
+                <span>{featureLabels[feature]}</span>
+                <span>{getMonthlyAmount(featureCosts[feature]).toLocaleString()} SEK/month</span>
+              </div>
+            ))}
+            
+            <div className="breakdown-item">
+              <span>{designLabels[invoiceData.design]}</span>
+              <span>{getMonthlyAmount(designCosts[invoiceData.design]).toLocaleString()} SEK/month</span>
+            </div>
+            
+            {(invoiceData.timeline === 'fast' || invoiceData.timeline === 'urgent') && (
+              <div className="breakdown-item">
+                <span>{timelineFactors[invoiceData.timeline]}</span>
+                <span>{invoiceData.timeline === 'fast' ? '+20%' : '+50%'}</span>
+              </div>
+            )}
+            
+            <div className="breakdown-item monthly-payment">
+              <span>{lang.pricePaymentOptionsSubscription}</span>
+              <span>{invoiceData.monthlyPayment.toLocaleString()} SEK/month</span>
+            </div>
+
+            <div className="breakdown-item monthly-fee">
+              <span>{lang.priceMonthlyFeeWithCommission}</span>
+              <span>{invoiceData.monthlyFee.toLocaleString()} SEK/month</span>
+            </div>
+
+            <div className="breakdown-item total">
+              <span>{lang.priceTotalMonthlyCost}</span>
+              <span>{(invoiceData.monthlyPayment + invoiceData.monthlyFee).toLocaleString()} SEK/month</span>
+            </div>
+          </>
         )}
-        
-        <div className="breakdown-item total">
-          <span>{lang.priceTotal}</span>
-          <span>{invoiceData.price.toLocaleString()} SEK</span>
+
+        <div className="breakdown-item monthly-details">
+          <span>{lang.priceMonthlyFeeBreakdown}</span>
+          <div className="monthly-details-content">
+            <div className="monthly-detail-item">
+              <span>{lang.pricePlatformMaintenance}</span>
+              <span>{invoiceData.monthlyPlatformCost.toLocaleString()} SEK</span>
+            </div>
+            {Object.entries(invoiceData.monthlyFeatureCosts).map(([feature, cost]) => (
+              <div className="monthly-detail-item" key={feature}>
+                <span>{featureLabels[feature]}:</span>
+                <span>{cost.toLocaleString()} SEK</span>
+              </div>
+            ))}
+            <div className="monthly-detail-item commission">
+              <span>{lang.priceCommission}</span>
+              <span>{invoiceData.commission.toLocaleString()} SEK</span>
+            </div>
+          </div>
         </div>
       </>
     );
@@ -280,7 +380,17 @@ Size: ${invoiceData.size}
 Features: ${invoiceData.features.map(f => featureLabels[f]).join(', ')}
 Design: ${designLabels[invoiceData.design]}
 Timeline: ${timelineFactors[invoiceData.timeline]}
-Estimated Price: ${invoiceData.price.toLocaleString()} SEK
+${invoiceData.paymentOption === 'full' 
+  ? `Estimated Price: ${invoiceData.price.toLocaleString()} SEK (${lang.pricePaymentOptionsFull})` 
+  : `Monthly Subscription: ${invoiceData.monthlyPayment.toLocaleString()} SEK/month (${lang.priceSubscriptionCommitment})`}
+
+${lang.priceMonthlyFeeBreakdown}
+${lang.pricePlatformMaintenance} ${invoiceData.monthlyFeeBreakdown.platformMaintenance.toLocaleString()} SEK
+${Object.entries(invoiceData.monthlyFeeBreakdown.features).map(([feature, data]) => 
+  `${data.label}: ${data.cost.toLocaleString()} SEK`
+).join('\n')}
+${lang.priceCommission} ${invoiceData.monthlyFeeBreakdown.commission.toLocaleString()} SEK
+Total Monthly Fee: ${invoiceData.monthlyFeeBreakdown.total.toLocaleString()} SEK
                   `}
                 />
               )}
@@ -307,11 +417,25 @@ Estimated Price: ${invoiceData.price.toLocaleString()} SEK
         </div>
         
         <div className="price-display">
-          <span className="price-amount">{invoiceData?.price.toLocaleString()}</span>
-          <span className="price-currency">SEK</span>
+          {invoiceData?.paymentOption === 'lease' ? (
+            <>
+              <span className="price-amount">{invoiceData?.monthlyPayment.toLocaleString()}</span>
+              <span className="price-currency">SEK</span>
+              <span className="price-period">/month</span>
+            </>
+          ) : (
+            <>
+              <span className="price-amount">{invoiceData?.price.toLocaleString()}</span>
+              <span className="price-currency">SEK</span>
+            </>
+          )}
         </div>
         
-        <p className="price-note">{lang.priceEstimateNote}</p>
+        <p className="price-note">
+          {invoiceData?.paymentOption === 'lease' 
+            ? lang.priceSubscriptionCommitment 
+            : lang.priceEstimateNote}
+        </p>
         
         <div className="breakdown-container">
           <h3>{lang.priceBreakdownTitle}</h3>
