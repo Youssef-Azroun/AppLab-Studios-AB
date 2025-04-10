@@ -338,8 +338,6 @@ const Terms = () => {
           <p>In order to resolve a complaint regarding the Services or to receive further information regarding use of the Services, please contact us at:</p>
           <p>
             AppLab Studios<br />
-            Övre Långvinkelsgatan 146B<br />
-            Helsingborg, Skåne 254 36<br />
             Sweden<br />
             Phone: 0700363789<br />
             Email: youssef.azroun.applab@gmail.com

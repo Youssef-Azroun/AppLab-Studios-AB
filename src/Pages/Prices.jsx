@@ -16,7 +16,7 @@ const Prices = () => {
   const [selectedDesign, setSelectedDesign] = useState('basic');
   const [selectedTimeline, setSelectedTimeline] = useState('standard');
   const [paymentOption, setPaymentOption] = useState('full'); // 'full' or 'lease'
-  const [leaseDuration, setLeaseDuration] = useState(12); // Fixed 12-month minimum commitment
+  const [leaseDuration, setLeaseDuration] = useState(48); // Fixed 12-month minimum commitment
   
   const navigate = useNavigate()
   
@@ -24,21 +24,21 @@ const Prices = () => {
   const monthlyFeatureCosts = {
     'auth': 100,    // Authentication service
     'payment': 200, // Payment gateway fees
-    'admin': 150,   // Admin panel maintenance
+    'admin': 0,     // Admin panel maintenance (fee removed)
     'media': 100,   // Media storage and CDN
-    'search': 150,  // Search service
-    'multilingual': 100, // Translation service
+    'search': 0,    // Search service (fee removed)
+    'multilingual': 0, // Translation service (fee removed)
     'chat': 300,    // Real-time chat service
     'analytics': 100 // Analytics service
   }
 
   // Monthly platform costs
   const monthlyPlatformCosts = {
-    'website': 500,
-    'ios': 800,
-    'android': 800,
-    'both': 1500,
-    'all': 2000
+    'website': 400,
+    'ios': 700,
+    'android': 700,
+    'both': 1300,
+    'all': 1800
   }
 
   // Design costs
@@ -563,6 +563,9 @@ const Prices = () => {
     // Helper function to calculate monthly cost
     const getMonthlyAmount = (amount) => Math.round(amount / leaseDuration);
     
+    // List of features with no monthly fee
+    const freeMonthlyFeatures = ['admin', 'search', 'multilingual'];
+    
     return (
       <>
         {/* Payment Option Selector */}
@@ -655,6 +658,20 @@ const Prices = () => {
                     <span>{data.cost.toLocaleString()} SEK</span>
                   </div>
                 ))}
+                
+                {/* Add note about free features if any are selected */}
+                {selections.features.some(f => freeMonthlyFeatures.includes(f)) && (
+                  <div className="monthly-detail-item free-features">
+                    <span><strong>Free Features (No Monthly Fee):</strong></span>
+                    <span>
+                      {selections.features
+                        .filter(f => freeMonthlyFeatures.includes(f))
+                        .map(f => featureLabels[f])
+                        .join(', ')}
+                    </span>
+                  </div>
+                )}
+                
                 <div className="monthly-detail-item commission">
                   <span>{lang.priceCommission}</span>
                   <span>{monthlyFeeDetails.commission.toLocaleString()} SEK</span>
@@ -693,19 +710,19 @@ const Prices = () => {
               </div>
             )}
 
-            <div className="breakdown-item total">
+            <div className="breakdown-item">
               <span>{lang.priceMonthlySubscription}</span>
               <span>{leaseDetails.monthlyPayment.toLocaleString()} SEK/month</span>
             </div>
 
-            <div className="breakdown-item monthly-fee">
+            <div className="breakdown-item">
               <span>{lang.priceMonthlyPlatformFee}</span>
               <span>{monthlyFee.toLocaleString()} SEK/month</span>
             </div>
 
             <div className="breakdown-item total">
-              <span>{lang.priceTotalMonthlyCost}</span>
-              <span>{(leaseDetails.monthlyPayment + monthlyFee).toLocaleString()} SEK/month</span>
+              <span><strong>{lang.priceTotalMonthlyCost}</strong></span>
+              <span><strong>{(leaseDetails.monthlyPayment + monthlyFee).toLocaleString()} SEK/month</strong></span>
             </div>
 
             <div className="breakdown-item monthly-details">
@@ -721,6 +738,20 @@ const Prices = () => {
                     <span>{data.cost.toLocaleString()} SEK</span>
                   </div>
                 ))}
+                
+                {/* Add note about free features if any are selected */}
+                {selections.features.some(f => freeMonthlyFeatures.includes(f)) && (
+                  <div className="monthly-detail-item free-features">
+                    <span><strong>Free Features (No Monthly Fee):</strong></span>
+                    <span>
+                      {selections.features
+                        .filter(f => freeMonthlyFeatures.includes(f))
+                        .map(f => featureLabels[f])
+                        .join(', ')}
+                    </span>
+                  </div>
+                )}
+                
                 <div className="monthly-detail-item commission">
                   <span>{lang.priceCommission}</span>
                   <span>{monthlyFeeDetails.commission.toLocaleString()} SEK</span>
@@ -824,16 +855,23 @@ const Prices = () => {
             <span className="price-amount">
               {paymentOption === 'full' 
                 ? price.toLocaleString() 
-                : Math.round(price / leaseDuration).toLocaleString()}
+                : (Math.round(price / leaseDuration) + monthlyFee).toLocaleString()}
             </span>
             <span className="price-currency">SEK</span>
-            {paymentOption === 'lease' && <span className="price-period">/month</span>}
+            {paymentOption === 'lease' && <span className="price-currency price-period">/month</span>}
+            
+            {paymentOption === 'full' && 
+              <div className="monthly-fee-display">
+                <span className="monthly-fee-label">{lang.priceMonthlyFeeWithCommission}: </span>
+                <span className="monthly-fee-amount">{monthlyFee.toLocaleString()} SEK/month</span>
+              </div>
+            }
           </div>
           
           <p className="price-note">
             {paymentOption === 'full' 
               ? lang.priceEstimateNote 
-              : lang.priceSubscriptionCommitment}
+              : `${lang.priceSubscriptionCommitment} (${lang.priceTotalMonthlyCost})`}
           </p>
           
           <div className="breakdown-container">
