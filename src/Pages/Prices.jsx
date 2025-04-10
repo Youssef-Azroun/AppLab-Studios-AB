@@ -10,9 +10,50 @@ const Prices = () => {
   const [selections, setSelections] = useState({})
   const [showResult, setShowResult] = useState(false)
   const [price, setPrice] = useState(0)
+  const [monthlyFee, setMonthlyFee] = useState(0)
   const [animateResult, setAnimateResult] = useState(false)
+  const [selectedFeatures, setSelectedFeatures] = useState([]);
+  const [selectedDesign, setSelectedDesign] = useState('basic');
+  const [selectedTimeline, setSelectedTimeline] = useState('standard');
+  const [paymentOption, setPaymentOption] = useState('full'); // 'full' or 'lease'
+  const [leaseDuration, setLeaseDuration] = useState(12); // Fixed 12-month minimum commitment
   
   const navigate = useNavigate()
+  
+  // Monthly costs for features
+  const monthlyFeatureCosts = {
+    'auth': 100,    // Authentication service
+    'payment': 200, // Payment gateway fees
+    'admin': 150,   // Admin panel maintenance
+    'media': 100,   // Media storage and CDN
+    'search': 150,  // Search service
+    'multilingual': 100, // Translation service
+    'chat': 300,    // Real-time chat service
+    'analytics': 100 // Analytics service
+  }
+
+  // Monthly platform costs
+  const monthlyPlatformCosts = {
+    'website': 500,
+    'ios': 800,
+    'android': 800,
+    'both': 1500,
+    'all': 2000
+  }
+
+  // Design costs
+  const designCosts = {
+    'basic': 0,
+    'custom': 5000,
+    'premium': 10000
+  }
+
+  // Size multipliers
+  const sizeMultipliers = {
+    'small': 1,
+    'medium': 1.5,
+    'large': 2
+  }
   
   // Get language context
   let lang;
@@ -288,6 +329,7 @@ const Prices = () => {
       setCurrentStep(0)
       setShowResult(false)
       setPrice(0)
+      setMonthlyFee(0)
       
       // After a brief delay, scroll to top of the page
       setTimeout(() => {
@@ -312,10 +354,32 @@ const Prices = () => {
       design: selections.design,
       timeline: selections.timeline,
       price: price,
+      monthlyFee: monthlyFee,
       platformLabel: getPlatformLabel(),
       featureLabels: selections.features.map(feature => featureLabels[feature]),
       designLabel: designLabels[selections.design],
-      timelineFactor: timelineFactors[selections.timeline]
+      timelineFactor: timelineFactors[selections.timeline],
+      monthlyFeatureCosts: selections.features.reduce((acc, feature) => {
+        acc[feature] = monthlyFeatureCosts[feature];
+        return acc;
+      }, {}),
+      monthlyPlatformCost: monthlyPlatformCosts[selections.platform] * sizeMultipliers[selections.size],
+      commission: monthlyFee * 0.2,
+      monthlyFeeBreakdown: {
+        platformMaintenance: monthlyPlatformCosts[selections.platform] * sizeMultipliers[selections.size],
+        features: selections.features.reduce((acc, feature) => {
+          acc[feature] = {
+            label: featureLabels[feature],
+            cost: monthlyFeatureCosts[feature]
+          };
+          return acc;
+        }, {}),
+        commission: monthlyFee * 0.2,
+        total: monthlyFee
+      },
+      paymentOption: paymentOption,
+      monthlyPayment: paymentOption === 'lease' ? Math.round(price / leaseDuration) : null,
+      leaseDuration: leaseDuration
     };
     
     navigate('/contact', { state: { invoiceData } });
@@ -323,86 +387,118 @@ const Prices = () => {
 
   const calculatePrice = () => {
     let basePrice = 0
+    let monthlyBaseFee = 0
     
     // Platform pricing (reduced prices)
     switch(selections.platform) {
       case 'website':
-        basePrice = 15000
+        basePrice = 7500
+        monthlyBaseFee = monthlyPlatformCosts.website
         break
       case 'ios':
-        basePrice = 20000
+        basePrice = 10000
+        monthlyBaseFee = monthlyPlatformCosts.ios
         break
       case 'android':
-        basePrice = 20000
+        basePrice = 10000
+        monthlyBaseFee = monthlyPlatformCosts.android
         break
       case 'both':
-        basePrice = 30000
+        basePrice = 15000
+        monthlyBaseFee = monthlyPlatformCosts.both
         break
       case 'all':
-        basePrice = 40000
+        basePrice = 20000
+        monthlyBaseFee = monthlyPlatformCosts.all
         break
       default:
-        basePrice = 15000
+        basePrice = 7500
+        monthlyBaseFee = monthlyPlatformCosts.website
     }
     
     // Project size multiplier
-    let sizeMultiplier = 1
-    switch(selections.size) {
-      case 'small':
-        sizeMultiplier = 1
-        break
-      case 'medium':
-        sizeMultiplier = 1.5
-        break
-      case 'large':
-        sizeMultiplier = 2
-        break
-      default:
-        sizeMultiplier = 1
-    }
+    let sizeMultiplier = sizeMultipliers[selections.size] || 1
     
     // Apply size multiplier to base price
-    let calculatedPrice = basePrice * sizeMultiplier
+    let calculatedPrice = Math.round(basePrice * sizeMultiplier)
+    let calculatedMonthlyFee = Math.round(monthlyBaseFee * sizeMultiplier)
     
     // Add feature costs
     const featureCosts = {
-      'auth': 5000,
-      'payment': 8000,
-      'admin': 10000,
-      'media': 7000,
-      'search': 6000,
-      'multilingual': 8000,
-      'chat': 12000,
-      'analytics': 9000
+      'auth': 2500,
+      'payment': 4000,
+      'admin': 5000,
+      'media': 3500,
+      'search': 3000,
+      'multilingual': 4000,
+      'chat': 6000,
+      'analytics': 4500
     }
     
     if (selections.features && selections.features.length > 0) {
       selections.features.forEach(feature => {
         calculatedPrice += featureCosts[feature]
+        calculatedMonthlyFee += monthlyFeatureCosts[feature]
       })
     }
     
     // Add design costs
     const designCosts = {
       'basic': 0,
-      'custom': 10000,
-      'premium': 20000
+      'custom': 5000,
+      'premium': 10000
     }
     
     calculatedPrice += designCosts[selections.design] || 0
     
     // Apply timeline multiplier
     if (selections.timeline === 'fast') {
-      calculatedPrice *= 1.2 // 20% increase for fast timeline
+      calculatedPrice = Math.round(calculatedPrice * 1.2) // 20% increase for fast timeline
     } else if (selections.timeline === 'urgent') {
-      calculatedPrice *= 1.5 // 50% increase for urgent timeline
+      calculatedPrice = Math.round(calculatedPrice * 1.5) // 50% increase for urgent timeline
     }
     
-    // Round to nearest thousand
+    // Add your commission (20% of monthly fee)
+    const commission = Math.round(calculatedMonthlyFee * 0.2)
+    calculatedMonthlyFee = Math.round(calculatedMonthlyFee + commission)
+    
+    // Round to nearest thousand for price
     calculatedPrice = Math.round(calculatedPrice / 1000) * 1000
     
     setPrice(calculatedPrice)
+    setMonthlyFee(calculatedMonthlyFee)
   }
+
+  const calculateLeasePayment = () => {
+    const monthlyPayment = Math.round(price / leaseDuration);
+    return {
+      monthlyPayment,
+      totalLeaseAmount: price,
+      duration: leaseDuration
+    };
+  };
+
+  const calculateMonthlyFee = () => {
+    const platformMaintenance = Math.round(monthlyPlatformCosts[selections.platform] * sizeMultipliers[selections.size]);
+    const features = selections.features.reduce((acc, feature) => {
+      acc[feature] = {
+        label: featureLabels[feature],
+        cost: Math.round(monthlyFeatureCosts[feature])
+      };
+      return acc;
+    }, {});
+    
+    const totalFeatureCosts = Math.round(Object.values(features).reduce((sum, feature) => sum + feature.cost, 0));
+    const commission = Math.round((platformMaintenance + totalFeatureCosts) * 0.2);
+    const total = Math.round(platformMaintenance + totalFeatureCosts + commission);
+
+    return {
+      platformMaintenance,
+      features,
+      commission,
+      total
+    };
+  };
   
   // Helper functions for displaying platform and timeline labels
   const getPlatformLabel = () => {
@@ -439,80 +535,203 @@ const Prices = () => {
     'urgent': lang.priceTimelineUrgentFactor
   }
   
-  const sizeCosts = {
-    'small': '1x',
-    'medium': '1.5x',
-    'large': '2x'
-  }
-  
   const renderPriceBreakdown = () => {
-    // Calculate platform cost with size multiplier
-    const platformCosts = {
-      'website': 15000,
-      'ios': 20000,
-      'android': 20000,
-      'both': 30000,
-      'all': 40000
-    }
-    
-    const sizeMultipliers = {
-      'small': 1,
-      'medium': 1.5,
-      'large': 2
-    }
-    
+    const leaseDetails = calculateLeasePayment();
+    const monthlyFeeDetails = calculateMonthlyFee();
+
+    // Calculate base platform price
+    const basePlatformPrice = {
+      'website': 7500,
+      'ios': 10000,
+      'android': 10000,
+      'both': 15000,
+      'all': 20000
+    }[selections.platform] * sizeMultipliers[selections.size];
+
+    // Calculate feature costs
     const featureCosts = {
-      'auth': 5000,
-      'payment': 8000,
-      'admin': 10000,
-      'media': 7000,
-      'search': 6000,
-      'multilingual': 8000,
-      'chat': 12000,
-      'analytics': 9000
-    }
+      'auth': 2500,
+      'payment': 4000,
+      'admin': 5000,
+      'media': 3500,
+      'search': 3000,
+      'multilingual': 4000,
+      'chat': 6000,
+      'analytics': 4500
+    };
     
-    const designCosts = {
-      'basic': 0,
-      'custom': 10000,
-      'premium': 20000
-    }
-    
-    const platformWithSize = platformCosts[selections.platform] * sizeMultipliers[selections.size]
+    // Helper function to calculate monthly cost
+    const getMonthlyAmount = (amount) => Math.round(amount / leaseDuration);
     
     return (
       <>
-        <div className="breakdown-item">
-          <span>{getPlatformLabel()} ({sizeCosts[selections.size]})</span>
-          <span>{platformWithSize.toLocaleString()} SEK</span>
+        {/* Payment Option Selector */}
+        <div className="payment-options" style={{
+          display: 'flex',
+          gap: '1rem',
+          marginBottom: '2rem',
+          justifyContent: 'center'
+        }}>
+          <button
+            onClick={() => setPaymentOption('full')}
+            style={{
+              padding: '0.75rem 1.5rem',
+              borderRadius: '0.5rem',
+              border: '2px solid #3b82f6',
+              backgroundColor: paymentOption === 'full' ? '#3b82f6' : 'transparent',
+              color: paymentOption === 'full' ? 'white' : '#3b82f6',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              fontSize: '1rem'
+            }}
+          >
+            {lang.pricePaymentOptionsFull}
+          </button>
+          <button
+            onClick={() => setPaymentOption('lease')}
+            style={{
+              padding: '0.75rem 1.5rem',
+              borderRadius: '0.5rem',
+              border: '2px solid #3b82f6',
+              backgroundColor: paymentOption === 'lease' ? '#3b82f6' : 'transparent',
+              color: paymentOption === 'lease' ? 'white' : '#3b82f6',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              fontSize: '1rem'
+            }}
+          >
+            {lang.pricePaymentOptionsSubscription}
+          </button>
         </div>
-        
-        {selections.features.map(feature => (
-          <div className="breakdown-item" key={feature}>
-            <span>{featureLabels[feature]}</span>
-            <span>{featureCosts[feature].toLocaleString()} SEK</span>
-          </div>
-        ))}
-        
-        <div className="breakdown-item">
-          <span>{designLabels[selections.design]}</span>
-          <span>{designCosts[selections.design].toLocaleString()} SEK</span>
-        </div>
-        
-        {(selections.timeline === 'fast' || selections.timeline === 'urgent') && (
-          <div className="breakdown-item">
-            <span>{timelineFactors[selections.timeline]}</span>
-            <span>{selections.timeline === 'fast' ? '+20%' : '+50%'}</span>
-          </div>
+
+        {paymentOption === 'full' ? (
+          <>
+            <div className="breakdown-item">
+              <span>{getPlatformLabel()} ({sizeMultipliers[selections.size]}x)</span>
+              <span>{basePlatformPrice.toLocaleString()} SEK</span>
+            </div>
+            
+            {selections.features.map(feature => (
+              <div className="breakdown-item" key={feature}>
+                <span>{featureLabels[feature]}</span>
+                <span>{featureCosts[feature].toLocaleString()} SEK</span>
+              </div>
+            ))}
+            
+            <div className="breakdown-item">
+              <span>{designLabels[selections.design]}</span>
+              <span>{designCosts[selections.design].toLocaleString()} SEK</span>
+            </div>
+            
+            {(selections.timeline === 'fast' || selections.timeline === 'urgent') && (
+              <div className="breakdown-item">
+                <span>{timelineFactors[selections.timeline]}</span>
+                <span>{selections.timeline === 'fast' ? '+20%' : '+50%'}</span>
+              </div>
+            )}
+            
+            <div className="breakdown-item total">
+              <span>{lang.priceTotal}</span>
+              <span>{price.toLocaleString()} SEK</span>
+            </div>
+
+            <div className="breakdown-item monthly-fee">
+              <span>{lang.priceMonthlyFeeWithCommission}</span>
+              <span>{monthlyFee.toLocaleString()} SEK/month</span>
+            </div>
+
+            <div className="breakdown-item monthly-details">
+              <span>{lang.priceMonthlyFeeBreakdown}</span>
+              <div className="monthly-details-content">
+                <div className="monthly-detail-item">
+                  <span>{lang.pricePlatformMaintenance}</span>
+                  <span>{monthlyFeeDetails.platformMaintenance.toLocaleString()} SEK</span>
+                </div>
+                {Object.entries(monthlyFeeDetails.features).map(([feature, data]) => (
+                  <div className="monthly-detail-item" key={feature}>
+                    <span>{data.label}:</span>
+                    <span>{data.cost.toLocaleString()} SEK</span>
+                  </div>
+                ))}
+                <div className="monthly-detail-item commission">
+                  <span>{lang.priceCommission}</span>
+                  <span>{monthlyFeeDetails.commission.toLocaleString()} SEK</span>
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="breakdown-item">
+              <span>{lang.priceSubscriptionTerm}</span>
+              <span>{lang.priceSubscriptionCommitment}</span>
+            </div>
+
+            <div className="breakdown-item">
+              <span>{getPlatformLabel()} ({sizeMultipliers[selections.size]}x)</span>
+              <span>{getMonthlyAmount(basePlatformPrice).toLocaleString()} SEK/month</span>
+            </div>
+            
+            {selections.features.map(feature => (
+              <div className="breakdown-item" key={feature}>
+                <span>{featureLabels[feature]}</span>
+                <span>{getMonthlyAmount(featureCosts[feature]).toLocaleString()} SEK/month</span>
+              </div>
+            ))}
+            
+            <div className="breakdown-item">
+              <span>{designLabels[selections.design]}</span>
+              <span>{getMonthlyAmount(designCosts[selections.design]).toLocaleString()} SEK/month</span>
+            </div>
+
+            {(selections.timeline === 'fast' || selections.timeline === 'urgent') && (
+              <div className="breakdown-item">
+                <span>{timelineFactors[selections.timeline]}</span>
+                <span>{selections.timeline === 'fast' ? '+20%' : '+50%'}</span>
+              </div>
+            )}
+
+            <div className="breakdown-item total">
+              <span>{lang.priceMonthlySubscription}</span>
+              <span>{leaseDetails.monthlyPayment.toLocaleString()} SEK/month</span>
+            </div>
+
+            <div className="breakdown-item monthly-fee">
+              <span>{lang.priceMonthlyPlatformFee}</span>
+              <span>{monthlyFee.toLocaleString()} SEK/month</span>
+            </div>
+
+            <div className="breakdown-item total">
+              <span>{lang.priceTotalMonthlyCost}</span>
+              <span>{(leaseDetails.monthlyPayment + monthlyFee).toLocaleString()} SEK/month</span>
+            </div>
+
+            <div className="breakdown-item monthly-details">
+              <span>{lang.priceMonthlyFeeBreakdown}</span>
+              <div className="monthly-details-content">
+                <div className="monthly-detail-item">
+                  <span>{lang.pricePlatformMaintenance}</span>
+                  <span>{monthlyFeeDetails.platformMaintenance.toLocaleString()} SEK</span>
+                </div>
+                {Object.entries(monthlyFeeDetails.features).map(([feature, data]) => (
+                  <div className="monthly-detail-item" key={feature}>
+                    <span>{data.label}:</span>
+                    <span>{data.cost.toLocaleString()} SEK</span>
+                  </div>
+                ))}
+                <div className="monthly-detail-item commission">
+                  <span>{lang.priceCommission}</span>
+                  <span>{monthlyFeeDetails.commission.toLocaleString()} SEK</span>
+                </div>
+              </div>
+            </div>
+          </>
         )}
-        
-        <div className="breakdown-item total">
-          <span>{lang.priceTotal}</span>
-          <span>{price.toLocaleString()} SEK</span>
-        </div>
       </>
-    )
-  }
+    );
+  };
 
   const currentQuestion = questions[currentStep]
 
@@ -602,14 +821,22 @@ const Prices = () => {
           </div>
           
           <div className="price-display">
-            <span className="price-amount">{price.toLocaleString()}</span>
+            <span className="price-amount">
+              {paymentOption === 'full' 
+                ? price.toLocaleString() 
+                : Math.round(price / leaseDuration).toLocaleString()}
+            </span>
             <span className="price-currency">SEK</span>
+            {paymentOption === 'lease' && <span className="price-period">/month</span>}
           </div>
           
-          <p className="price-note">{lang.priceEstimateNote}</p>
+          <p className="price-note">
+            {paymentOption === 'full' 
+              ? lang.priceEstimateNote 
+              : lang.priceSubscriptionCommitment}
+          </p>
           
           <div className="breakdown-container">
-            <h3>{lang.priceBreakdownTitle}</h3>
             {renderPriceBreakdown()}
           </div>
           
