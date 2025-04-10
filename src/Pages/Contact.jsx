@@ -91,6 +91,9 @@ const Contact = () => {
     'analytics': lang.priceFeatureAnalytics
   };
 
+  // List of features with no monthly fee
+  const freeMonthlyFeatures = ['admin', 'search', 'multilingual'];
+
   const designLabels = {
     'basic': lang.priceDesignBasic,
     'custom': lang.priceDesignCustom,
@@ -309,6 +312,20 @@ Total Monthly Fee: ${invoiceData.monthlyFeeBreakdown.total.toLocaleString()} SEK
                 <span>{cost.toLocaleString()} SEK</span>
               </div>
             ))}
+            
+            {/* Add note about free features if any are selected */}
+            {invoiceData?.features.some(f => freeMonthlyFeatures.includes(f)) && (
+              <div className="monthly-detail-item free-features">
+                <span><strong>Free Features (No Monthly Fee):</strong></span>
+                <span>
+                  {invoiceData.features
+                    .filter(f => freeMonthlyFeatures.includes(f))
+                    .map(f => featureLabels[f])
+                    .join(', ')}
+                </span>
+              </div>
+            )}
+            
             <div className="monthly-detail-item commission">
               <span>{lang.priceCommission}</span>
               <span>{invoiceData.commission.toLocaleString()} SEK</span>
@@ -419,21 +436,25 @@ Total Monthly Fee: ${invoiceData.monthlyFeeBreakdown.total.toLocaleString()} SEK
         <div className="price-display">
           {invoiceData?.paymentOption === 'lease' ? (
             <>
-              <span className="price-amount">{invoiceData?.monthlyPayment.toLocaleString()}</span>
+              <span className="price-amount">{(invoiceData?.monthlyPayment + invoiceData?.monthlyFee).toLocaleString()}</span>
               <span className="price-currency">SEK</span>
-              <span className="price-period">/month</span>
+              <span className="price-currency price-period">/month</span>
             </>
           ) : (
             <>
               <span className="price-amount">{invoiceData?.price.toLocaleString()}</span>
               <span className="price-currency">SEK</span>
+              <div className="monthly-fee-display">
+                <span className="monthly-fee-label">{lang.priceMonthlyFeeWithCommission}: </span>
+                <span className="monthly-fee-amount">{invoiceData?.monthlyFee.toLocaleString()} SEK/month</span>
+              </div>
             </>
           )}
         </div>
         
         <p className="price-note">
           {invoiceData?.paymentOption === 'lease' 
-            ? lang.priceSubscriptionCommitment 
+            ? `${lang.priceSubscriptionCommitment} (${lang.priceTotalMonthlyCost})`
             : lang.priceEstimateNote}
         </p>
         
