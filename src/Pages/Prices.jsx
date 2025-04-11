@@ -613,19 +613,19 @@ const Prices = () => {
           <>
             <div className="breakdown-item">
               <span>{getPlatformLabel()} ({sizeMultipliers[selections.size]}x)</span>
-              <span>{basePlatformPrice.toLocaleString()} SEK</span>
+              <span>{basePlatformPrice.toLocaleString()} {lang.priceCurrency}</span>
             </div>
             
             {selections.features.map(feature => (
               <div className="breakdown-item" key={feature}>
                 <span>{featureLabels[feature]}</span>
-                <span>{featureCosts[feature].toLocaleString()} SEK</span>
+                <span>{featureCosts[feature].toLocaleString()} {lang.priceCurrency}</span>
               </div>
             ))}
             
             <div className="breakdown-item">
               <span>{designLabels[selections.design]}</span>
-              <span>{designCosts[selections.design].toLocaleString()} SEK</span>
+              <span>{designCosts[selections.design].toLocaleString()} {lang.priceCurrency}</span>
             </div>
             
             {(selections.timeline === 'fast' || selections.timeline === 'urgent') && (
@@ -637,12 +637,12 @@ const Prices = () => {
             
             <div className="breakdown-item total">
               <span>{lang.priceTotal}</span>
-              <span>{price.toLocaleString()} SEK</span>
+              <span>{price.toLocaleString()} {lang.priceCurrency}</span>
             </div>
 
             <div className="breakdown-item monthly-fee">
               <span>{lang.priceMonthlyFeeWithCommission}</span>
-              <span>{monthlyFee.toLocaleString()} SEK/month</span>
+              <span>{monthlyFee.toLocaleString()} {lang.pricePerMonth}</span>
             </div>
 
             <div className="breakdown-item monthly-details">
@@ -650,19 +650,19 @@ const Prices = () => {
               <div className="monthly-details-content">
                 <div className="monthly-detail-item">
                   <span>{lang.pricePlatformMaintenance}</span>
-                  <span>{monthlyFeeDetails.platformMaintenance.toLocaleString()} SEK</span>
+                  <span>{monthlyFeeDetails.platformMaintenance.toLocaleString()} {lang.pricePerMonth}</span>
                 </div>
                 {Object.entries(monthlyFeeDetails.features).map(([feature, data]) => (
                   <div className="monthly-detail-item" key={feature}>
                     <span>{data.label}:</span>
-                    <span>{data.cost.toLocaleString()} SEK</span>
+                    <span>{data.cost.toLocaleString()} {lang.pricePerMonth}</span>
                   </div>
                 ))}
                 
                 {/* Add note about free features if any are selected */}
                 {selections.features.some(f => freeMonthlyFeatures.includes(f)) && (
                   <div className="monthly-detail-item free-features">
-                    <span><strong>Free Features (No Monthly Fee):</strong></span>
+                    <span><strong>{lang.priceFreeFeatures}</strong></span>
                     <span>
                       {selections.features
                         .filter(f => freeMonthlyFeatures.includes(f))
@@ -674,7 +674,7 @@ const Prices = () => {
                 
                 <div className="monthly-detail-item commission">
                   <span>{lang.priceCommission}</span>
-                  <span>{monthlyFeeDetails.commission.toLocaleString()} SEK</span>
+                  <span>{monthlyFeeDetails.commission.toLocaleString()} {lang.pricePerMonth}</span>
                 </div>
               </div>
             </div>
@@ -688,19 +688,19 @@ const Prices = () => {
 
             <div className="breakdown-item">
               <span>{getPlatformLabel()} ({sizeMultipliers[selections.size]}x)</span>
-              <span>{getMonthlyAmount(basePlatformPrice).toLocaleString()} SEK/month</span>
+              <span>{getMonthlyAmount(basePlatformPrice).toLocaleString()} {lang.pricePerMonth}</span>
             </div>
             
             {selections.features.map(feature => (
               <div className="breakdown-item" key={feature}>
                 <span>{featureLabels[feature]}</span>
-                <span>{getMonthlyAmount(featureCosts[feature]).toLocaleString()} SEK/month</span>
+                <span>{getMonthlyAmount(featureCosts[feature]).toLocaleString()} {lang.pricePerMonth}</span>
               </div>
             ))}
             
             <div className="breakdown-item">
               <span>{designLabels[selections.design]}</span>
-              <span>{getMonthlyAmount(designCosts[selections.design]).toLocaleString()} SEK/month</span>
+              <span>{getMonthlyAmount(designCosts[selections.design]).toLocaleString()} {lang.pricePerMonth}</span>
             </div>
 
             {(selections.timeline === 'fast' || selections.timeline === 'urgent') && (
@@ -712,17 +712,17 @@ const Prices = () => {
 
             <div className="breakdown-item">
               <span>{lang.priceMonthlySubscription}</span>
-              <span>{leaseDetails.monthlyPayment.toLocaleString()} SEK/month</span>
+              <span>{leaseDetails.monthlyPayment.toLocaleString()} {lang.pricePerMonth}</span>
             </div>
 
             <div className="breakdown-item">
               <span>{lang.priceMonthlyPlatformFee}</span>
-              <span>{monthlyFee.toLocaleString()} SEK/month</span>
+              <span>{monthlyFee.toLocaleString()} {lang.pricePerMonth}</span>
             </div>
 
             <div className="breakdown-item total">
               <span><strong>{lang.priceTotalMonthlyCost}</strong></span>
-              <span><strong>{(leaseDetails.monthlyPayment + monthlyFee).toLocaleString()} SEK/month</strong></span>
+              <span><strong>{(leaseDetails.monthlyPayment + monthlyFee).toLocaleString()} {lang.pricePerMonth}</strong></span>
             </div>
 
             <div className="breakdown-item monthly-details">
@@ -730,19 +730,19 @@ const Prices = () => {
               <div className="monthly-details-content">
                 <div className="monthly-detail-item">
                   <span>{lang.pricePlatformMaintenance}</span>
-                  <span>{monthlyFeeDetails.platformMaintenance.toLocaleString()} SEK</span>
+                  <span>{monthlyFeeDetails.platformMaintenance.toLocaleString()} {lang.pricePerMonth}</span>
                 </div>
                 {Object.entries(monthlyFeeDetails.features).map(([feature, data]) => (
                   <div className="monthly-detail-item" key={feature}>
                     <span>{data.label}:</span>
-                    <span>{data.cost.toLocaleString()} SEK</span>
+                    <span>{data.cost.toLocaleString()} {lang.pricePerMonth}</span>
                   </div>
                 ))}
                 
                 {/* Add note about free features if any are selected */}
                 {selections.features.some(f => freeMonthlyFeatures.includes(f)) && (
                   <div className="monthly-detail-item free-features">
-                    <span><strong>Free Features (No Monthly Fee):</strong></span>
+                    <span><strong>{lang.priceFreeFeatures}</strong></span>
                     <span>
                       {selections.features
                         .filter(f => freeMonthlyFeatures.includes(f))
@@ -754,7 +754,7 @@ const Prices = () => {
                 
                 <div className="monthly-detail-item commission">
                   <span>{lang.priceCommission}</span>
-                  <span>{monthlyFeeDetails.commission.toLocaleString()} SEK</span>
+                  <span>{monthlyFeeDetails.commission.toLocaleString()} {lang.pricePerMonth}</span>
                 </div>
               </div>
             </div>
@@ -857,13 +857,13 @@ const Prices = () => {
                 ? price.toLocaleString() 
                 : (Math.round(price / leaseDuration) + monthlyFee).toLocaleString()}
             </span>
-            <span className="price-currency">SEK</span>
-            {paymentOption === 'lease' && <span className="price-currency price-period">/month</span>}
+            <span className="price-currency">{lang.priceCurrency}</span>
+            {paymentOption === 'lease' && <span className="price-currency price-period">{lang.pricePeriodMonth}</span>}
             
             {paymentOption === 'full' && 
               <div className="monthly-fee-display">
                 <span className="monthly-fee-label">{lang.priceMonthlyFeeWithCommission}: </span>
-                <span className="monthly-fee-amount">{monthlyFee.toLocaleString()} SEK/month</span>
+                <span className="monthly-fee-amount">{monthlyFee.toLocaleString()} {lang.pricePerMonth}</span>
               </div>
             }
           </div>
