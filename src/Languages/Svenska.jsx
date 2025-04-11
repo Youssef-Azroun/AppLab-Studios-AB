@@ -319,6 +319,14 @@ const Svenska = {
   priceCommission: "Provision (20%):",
   priceTotalMonthlyCost: "Total månadskostnad (Abonnemang + Plattformsavgift)",
   
+  // Currency and time period
+  priceCurrency: "SEK",
+  pricePerMonth: "SEK/månad",
+  pricePeriodMonth: "/månad",
+  
+  // Free features
+  priceFreeFeatures: "Gratisfunktioner (Ingen månadsavgift):",
+  
   // Contact Form
   contactFormTitle: "Kontakta oss",
   contactFormName: "Namn",

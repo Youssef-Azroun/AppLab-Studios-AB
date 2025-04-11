@@ -319,6 +319,14 @@ const English = {
   priceCommission: "Commission (20%):",
   priceTotalMonthlyCost: "Total Monthly Cost (Subscription + Platform Fee)",
   
+  // Currency and time period
+  priceCurrency: "SEK",
+  pricePerMonth: "SEK/month",
+  pricePeriodMonth: "/month",
+  
+  // Free features
+  priceFreeFeatures: "Free Features (No Monthly Fee):",
+  
   // Contact Form
   contactFormTitle: "Contact us",
   contactFormName: "Name",
