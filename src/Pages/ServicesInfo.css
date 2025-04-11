@@ -1,22 +1,25 @@
+/* Base container */
 .service-info-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  box-sizing: border-box;
 }
 
+/* Header section */
 .service-info-header {
   text-align: center;
-  margin-bottom: 5rem;
-  position: relative;
-  padding: 3rem;
+  margin-bottom: 4rem;
+  padding: 3rem 2rem;
   background: linear-gradient(135deg, rgba(100, 108, 255, 0.08), rgba(83, 91, 242, 0.08));
   border-radius: 30px;
 }
 
 .service-icon-large {
-  font-size: 4.5rem;
+  font-size: 4rem;
   color: #646cff;
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 .service-info-header h1 {
@@ -25,6 +28,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .service-description {
@@ -33,25 +37,31 @@
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.7;
-}
-
-.tech-stack-section {
-  margin-bottom: 5rem;
   text-align: center;
 }
 
-.tech-stack-section h2 {
+/* Tech stack section */
+.tech-stack-section {
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.tech-stack-section h2, 
+.detailed-features h2 {
   font-size: 2.5rem;
   color: #213547;
   margin-bottom: 3rem;
   position: relative;
+  text-align: center;
   display: inline-block;
+  padding-bottom: 1rem;
 }
 
-.tech-stack-section h2::after {
+.tech-stack-section h2::after,
+.detailed-features h2::after {
   content: '';
   position: absolute;
-  bottom: -10px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 60px;
@@ -63,50 +73,32 @@
 .tech-pills {
   display: flex;
   justify-content: center;
-  gap: 1.2rem;
   flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0 auto;
 }
 
 .tech-pill {
   background: white;
   color: #646cff;
-  padding: 0.8rem 2rem;
+  padding: 0.8rem 1.5rem;
   border-radius: 50px;
   font-weight: 500;
   box-shadow: 0 4px 15px rgba(100, 108, 255, 0.15);
+  margin: 0.3rem;
 }
 
+/* Features section */
 .detailed-features {
-  margin-bottom: 5rem;
-}
-
-.detailed-features h2 {
+  margin-bottom: 4rem;
   text-align: center;
-  font-size: 2.5rem;
-  color: #213547;
-  margin-bottom: 3rem;
-  position: relative;
-  display: inline-block;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.detailed-features h2::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(135deg, #646cff, #535bf2);
-  border-radius: 2px;
 }
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
+  margin: 0 auto;
 }
 
 .feature-card {
@@ -114,15 +106,15 @@
   padding: 2.5rem;
   border-radius: 25px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  position: relative;
-  transform: none !important;
+  text-align: left;
   transition: none !important;
 }
 
 .feature-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
   transform: none !important;
   background: white !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+  cursor: default !important;
 }
 
 .feature-icon {
@@ -144,32 +136,34 @@
   font-size: 1.1rem;
 }
 
-/* Add back button styles */
-.back-button {
+/* Icon group for multi-icon services */
+.icon-group {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 50px;
-  font-weight: 500;
-  color: #646cff;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(100, 108, 255, 0.15);
-  margin-bottom: 2rem;
-  transition: all 0.3s ease;
+  justify-content: center;
+  gap: 1rem;
 }
 
-.back-button:hover {
-  transform: translateX(-5px);
-  box-shadow: 0 4px 15px rgba(100, 108, 255, 0.25);
+.service-icon {
+  font-size: 2rem;
 }
 
-/* Improve existing mobile styles */
+/* Responsive layouts */
+@media (max-width: 992px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .service-info-header h1 {
+    font-size: 3rem;
+  }
+}
+
+/* Mobile styles */
 @media (max-width: 768px) {
   .service-info-container {
-    padding: 1.5rem;
+    padding: 0 1.5rem;
+    margin: 1.5rem auto;
   }
 
   .service-info-header {
@@ -178,9 +172,7 @@
   }
 
   .service-info-header h1 {
-    font-size: 1.8rem;
-    word-wrap: break-word;
-    hyphens: auto;
+    font-size: 2rem;
   }
 
   .service-icon-large {
@@ -192,22 +184,20 @@
     font-size: 1rem;
   }
 
+  .tech-stack-section,
+  .detailed-features {
+    margin-bottom: 3rem;
+  }
+
   .tech-stack-section h2,
   .detailed-features h2 {
     font-size: 1.8rem;
     margin-bottom: 2rem;
   }
 
-  .tech-pills {
-    gap: 0.6rem;
-    flex-wrap: wrap;
-    padding: 0 0.5rem;
-  }
-
   .tech-pill {
     padding: 0.5rem 1rem;
-    font-size: 0.85rem;
-    white-space: nowrap;
+    font-size: 0.9rem;
   }
 
   .features-grid {
@@ -231,30 +221,13 @@
   .feature-card p {
     font-size: 0.95rem;
   }
-
-  .icon-group {
-    display: flex;
-    justify-content: center;
-    gap: 0.8rem;
-  }
-
-  .service-icon {
-    font-size: 1.8rem;
-  }
-
-  .service-icon-large .icon-group {
-    margin-bottom: 1rem;
-  }
-
-  .service-icon-large .service-icon {
-    font-size: 2.5rem;
-  }
 }
 
 /* Extra small devices */
-@media (max-width: 380px) {
+@media (max-width: 480px) {
   .service-info-container {
-    padding: 1rem;
+    padding: 0 1rem;
+    margin: 1rem auto;
   }
 
   .service-info-header {
@@ -266,30 +239,12 @@
     font-size: 1.5rem;
   }
 
-  .service-icon-large {
-    font-size: 2rem;
-  }
-
   .tech-pill {
     padding: 0.4rem 0.8rem;
     font-size: 0.75rem;
   }
 
-  .back-button {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
-  }
-
-  .service-description {
-    font-size: 0.9rem;
-  }
-}
-
-/* Fix for icon group on mobile */
-@media (max-width: 768px) {
-  .icon-group {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
+  .feature-card {
+    padding: 1.2rem;
   }
 }

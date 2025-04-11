@@ -191,7 +191,7 @@ const Svenska = {
   
   // Cross-platform Development Detailed Features
   crossDetailedFeature1Title: "React Native-lösningar",
-  crossDetailedFeature1Desc: "Bygger korsplattformsapplikationer med React Native och Expo. Implementerar nativa moduler och anpassade bryggor för plattformsspecifik funktionalitet.",
+  crossDetailedFeature1Desc: "Bygger korsplattforms applikationer med React Native och Expo. Implementerar nativa moduler och anpassade bryggor för plattformsspecifik funktionalitet.",
   
   crossDetailedFeature2Title: "Flutter-excellens",
   crossDetailedFeature2Desc: "Skapar vackra appar med Flutter och Dart. Använder anpassade animationer och plattformsspecifika designmönster för en nativ känsla.",
